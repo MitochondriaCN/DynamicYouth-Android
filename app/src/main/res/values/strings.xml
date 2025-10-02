@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">悦动青春</string>
+    <string name="homepage">主页</string>
+    <string name="beijing_time">北京时间</string>
 </resources>
