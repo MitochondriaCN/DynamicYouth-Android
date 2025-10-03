@@ -2,4 +2,6 @@
     <string name="app_name">悦动青春</string>
     <string name="homepage">主页</string>
     <string name="beijing_time">北京时间</string>
+    <string name="begin_climb">开始登山</string>
+    <string name="climbing_description">这里是一些关于登山的说明</string>
 </resources>
