@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -69,56 +71,65 @@ fun AppFramework(modifier: Modifier = Modifier) {
     DynamicYouthTheme {
         Scaffold(
             modifier = modifier.fillMaxSize(),
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(id = R.string.app_name),
-                            textAlign = TextAlign.Start,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 30.sp,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    }
-                )
-            },
-            bottomBar = {
-                NavigationBar {
-                    val navBackStackEntry by navController.currentBackStackEntryAsState()
-                    val currentDestination = navBackStackEntry?.destination
-
-                    navigationItems.forEach { item ->
-                        NavigationBarItem(
-                            icon = { Icon(item.icon, contentDescription = item.name) },
-                            label = { Text(item.name) },
-                            selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
-                            onClick = {
-                                navController.navigate(item.route) {
-                                    // 避免重复导航到同一目的地
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            }
-                        )
-                    }
-                }
-            }
+            topBar = { AppFrameworkTopBar() },
+            bottomBar = { AppFrameworkBottomBar(navController, navigationItems) }
         ) { innerPadding ->
             NavHost(
                 navController = navController,
                 startDestination = "homepage",
                 modifier = Modifier.padding(innerPadding)
-            )
-            {
+            ) {
                 composable("homepage") {
                     HomePage()
                 }
             }
         }
     }
+}
+
+@Composable
+private fun AppFrameworkBottomBar(
+    navController: NavHostController,
+    navigationItems: List<BottomNavItem>
+) {
+    NavigationBar() {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
+
+        navigationItems.forEach { item ->
+            NavigationBarItem(
+                icon = { Icon(item.icon, contentDescription = item.name) },
+                label = { Text(item.name) },
+                selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
+                onClick = {
+                    navController.navigate(item.route) {
+                        // 避免重复导航到同一目的地
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AppFrameworkTopBar() {
+    TopAppBar(
+        title = {
+            Text(
+                text = stringResource(id = R.string.app_name),
+                textAlign = TextAlign.Start,
+                fontWeight = FontWeight.Bold,
+                fontSize = 30.sp,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+    )
 }
 
 @Composable
