@@ -5,4 +5,7 @@
     <string name="beijing_time">GMT+8 Time</string>
     <string name="begin_climb">Begin Climbing</string>
     <string name="climbing_description">Here are some discriptions about climbing</string>
+    <string name="ranking">排行榜</string>
+    <string name="event">活动</string>
+    <string name="my">我的</string>
 </resources>

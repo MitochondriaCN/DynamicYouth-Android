@@ -8,13 +8,20 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AssistantPhoto
+import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.Contacts
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -64,7 +71,22 @@ fun AppFramework(modifier: Modifier = Modifier) {
         BottomNavItem(
             stringResource(R.string.homepage),
             "homepage",
-            ImageVector.vectorResource(R.drawable.ic_launcher_foreground)
+            Icons.Filled.Home
+        ),
+        BottomNavItem(
+            stringResource(R.string.event),
+            "event", //这里采取event作为“活动”的翻译，与现有前后端项目约定保持一致
+            Icons.Filled.AssistantPhoto
+        ),
+        BottomNavItem(
+            stringResource(R.string.ranking),
+            "ranking",
+            Icons.Filled.BarChart
+        ),
+        BottomNavItem(
+            stringResource(R.string.my),
+            "profile",
+            Icons.Filled.Contacts
         )
     )
 
@@ -77,22 +99,28 @@ fun AppFramework(modifier: Modifier = Modifier) {
             NavHost(
                 navController = navController,
                 startDestination = "homepage",
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .padding(horizontal = 20.dp)
             ) {
-                composable("homepage") {
-                    HomePage()
-                }
+                composable("homepage") { HomePage() }
+                composable("ranking") { RankingPage() }
+                composable("event") { EventPage() }
+                composable("profile") { ProfilePage() }
             }
         }
     }
 }
+
 
 @Composable
 private fun AppFrameworkBottomBar(
     navController: NavHostController,
     navigationItems: List<BottomNavItem>
 ) {
-    NavigationBar() {
+    NavigationBar(
+        windowInsets = NavigationBarDefaults.windowInsets
+    ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
@@ -138,7 +166,6 @@ fun HomePage(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .verticalScroll(scrollState)
-            .padding(horizontal = 20.dp)
     ) {
         Image(
             painter = painterResource(R.drawable.ic_launcher_background),
@@ -163,6 +190,22 @@ fun HomePage(modifier: Modifier = Modifier) {
         }
     }
 }
+
+@Composable
+fun EventPage() {
+    Text(stringResource(R.string.event))
+}
+
+@Composable
+fun RankingPage() {
+    Text(stringResource(R.string.ranking))
+}
+
+@Composable
+fun ProfilePage() {
+    Text(stringResource(R.string.my))
+}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
