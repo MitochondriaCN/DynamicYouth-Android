@@ -13,6 +13,8 @@ navigationCompose = "2.9.5"
 lifecycleLivedataKtx = "2.6.1"
 material3Version = "1.5.0-alpha04"
 materialIconsExtended = "1.7.8"
+coilCompose = "2.7.0"
+tencentMapVectorSdk = "6.3.0.250311.940c5007.146962199"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,6 +36,8 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3",
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3Version" }
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "materialIconsExtended" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
+tencent-map-vector-sdk = { group = "com.tencent.map", name = "tencent-map-vector-sdk", version.ref = "tencentMapVectorSdk" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

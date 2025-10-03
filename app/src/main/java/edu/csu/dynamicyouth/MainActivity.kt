@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AssistantPhoto
@@ -29,6 +30,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
@@ -46,6 +48,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import edu.csu.dynamicyouth.ui.theme.DynamicYouthTheme
 
 class MainActivity : ComponentActivity() {
@@ -167,10 +170,11 @@ fun HomePage(modifier: Modifier = Modifier) {
         modifier = modifier
             .verticalScroll(scrollState)
     ) {
-        Image(
-            painter = painterResource(R.drawable.ic_launcher_background),
+        AsyncImage(
+            model = R.drawable.home_promotional,
             contentDescription = null,
             modifier = Modifier.fillMaxWidth()
+                .clip(RoundedCornerShape(16.dp))
         )
 
         Text(
