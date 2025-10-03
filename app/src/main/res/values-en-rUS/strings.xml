@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Dynamic Youth</string>
-    <string name="homepage">主页</string>
-    <string name="beijing_time">北京时间</string>
-    <string name="begin_climb">开始登山</string>
-    <string name="climbing_description">这里是一些关于登山的说明</string>
+    <string name="homepage">Homepage</string>
+    <string name="beijing_time">GMT+8 Time</string>
+    <string name="begin_climb">Begin Climbing</string>
+    <string name="climbing_description">Here are some discriptions about climbing</string>
 </resources>
