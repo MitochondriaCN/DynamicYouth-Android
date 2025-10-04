@@ -4,153 +4,181 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AssistantPhoto
+import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.Contacts
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
+import edu.csu.dynamicyouth.component.AppFrameworkBottomBar
+import edu.csu.dynamicyouth.component.AppFrameworkTopBar
 import edu.csu.dynamicyouth.ui.theme.DynamicYouthTheme
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            DynamicYouthTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    topBar = {
-                        TopAppBar(
-                            title = {
-                                Text(
-                                    text = stringResource(id = R.string.app_name),
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier.fillMaxWidth()
-                                )
-                            }
-                        )
-                    }
-                ) { innerPadding ->
-                    Box(modifier = Modifier.padding(innerPadding))
-                    {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(128.dp)
-                        ) {
-                            Card(
-                                colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                                ),
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(start = 3.dp, top = 3.dp, end = 3.dp, bottom = 3.dp)
-                                    .weight(1f)
-                            ) {
-                                Text(
-                                    text = "主页",
-                                    modifier = Modifier
-                                        .padding(all = 16.dp),
-                                    style = MaterialTheme.typography.headlineLarge,
-                                    textAlign = TextAlign.Center,
-                                )
-                                Text(
-                                    text = "悦动青春登山打卡",
-                                    modifier = Modifier
-                                        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    textAlign = TextAlign.Center,
-                                )
-                            }
-                            Card(
-                                colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                                ),
-                                modifier = Modifier
-                                    .padding(top = 3.dp, end = 3.dp, bottom = 3.dp)
-                                    .fillMaxSize()
-                                    .weight(1f)
-                            ) {
-                                Text(
-                                    text = "北京时间",
-                                    modifier = Modifier
-                                        .padding(16.dp),
-                                    style = MaterialTheme.typography.headlineLarge,
-                                    textAlign = TextAlign.Center,
-                                )
-                                Text(
-                                    text = "北京时间",
-                                    modifier = Modifier
-                                        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    textAlign = TextAlign.Center,
-                                )
-                            }
-                        }
-                    }
-                }
+            AppFramework()
+        }
+    }
+}
+
+data class BottomNavItem(val name: String, val route: String, val icon: ImageVector)
+
+/**
+ * 主程序框架
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AppFramework(modifier: Modifier = Modifier) {
+    val navController = rememberNavController()
+    val navigationItems = listOf(
+        BottomNavItem(
+            icon = Icons.Filled.Home,
+            name = stringResource(R.string.homepage),
+            route = "homepage",
+        ),
+        BottomNavItem(
+            icon = Icons.Filled.AssistantPhoto,
+            name = stringResource(R.string.event),
+            route = "event",
+        ),
+        BottomNavItem(
+            icon = Icons.Filled.BarChart,
+            name = stringResource(R.string.ranking),
+            route = "ranking",
+        ),
+        BottomNavItem(
+            icon = Icons.Filled.Contacts,
+            name = stringResource(R.string.my),
+            route = "profile"
+        )
+    )
+
+    DynamicYouthTheme {
+        Scaffold(
+            modifier = modifier.fillMaxSize(),
+            topBar = { AppFrameworkTopBar() },
+            bottomBar = { AppFrameworkBottomBar(navController, navigationItems) }
+        ) { innerPadding ->
+            NavHost(
+                navController = navController,
+                startDestination = "homepage",
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .padding(horizontal = 20.dp)
+            ) {
+                composable("homepage") { HomePage() }
+                composable("ranking") { RankingPage() }
+                composable("event") { EventPage() }
+                composable("profile") { ProfilePage() }
             }
+        }
+    }
+
+}
+
+
+@Composable
+fun HomePage(modifier: Modifier = Modifier) {
+    val scrollState = rememberScrollState()
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(
+                top = 3.dp,
+                bottom = 3.dp)
+    ){
+        Column(
+            modifier = modifier
+                .verticalScroll(scrollState)
+                .fillMaxSize()
+        ) {
+            AsyncImage(
+                model = R.drawable.home_promotional,
+                contentDescription = stringResource(R.string.promotion_desc),
+                modifier = Modifier.fillMaxWidth()
+                    .clip(RoundedCornerShape(16.dp))
+            )
+
+            Text(
+                text = "这里是地图",
+                Modifier
+                    .fillMaxWidth()
+            )
+
+            Text(text = stringResource(R.string.climbing_description))
+
+
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter),
+        ) {
+            Spacer(
+                modifier.width(8.dp)
+            )
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                onClick = { /*TODO*/ },
+            ) {
+                Text(text = stringResource(R.string.begin_climb))
+            }
+            Spacer(
+                modifier.width(8.dp)
+            )
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun EventPage() {
+    Text(stringResource(R.string.event))
 }
+
+@Composable
+fun RankingPage() {
+    Text(stringResource(R.string.ranking))
+}
+
+@Composable
+fun ProfilePage() {
+    Text(stringResource(R.string.my))
+}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    DynamicYouthTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(20.dp)
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.app_name),
-                        textAlign = TextAlign.Start,
-                        fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.headlineMedium,
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {}
-            }
-        ) { innerPadding ->
-            Box(modifier = Modifier.padding(innerPadding))
-            {
-            }
-        }
-    }
+    AppFramework()
 }

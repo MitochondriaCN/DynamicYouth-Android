@@ -50,6 +50,11 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.coil.compose)
+    implementation(libs.tencent.map.vector.sdk)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -57,4 +62,8 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose) // 建议使用最新稳定版
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
 }
