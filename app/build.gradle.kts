@@ -63,7 +63,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4") // 建议使用最新稳定版
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4")
+    implementation(libs.androidx.lifecycle.viewmodel.compose) // 建议使用最新稳定版
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
 }
