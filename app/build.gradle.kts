@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.coil.compose)
     implementation(libs.tencent.map.vector.sdk)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -63,7 +64,15 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    implementation(libs.androidx.lifecycle.viewmodel.compose) // 建议使用最新稳定版
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    //腾讯地图SDK
+    // 地图
+    implementation("com.tencent.map:tencent-map-vector-sdk:6.6.1.250911.cd32746f.176437250")
+    // 基础库
+    implementation("com.tencent.openmap:foundation:0.7.0.92a115a")
+    // 地图组件库，包括小车平移、点聚合等组件功能，详见开发指南。
+    implementation("com.tencent.map:sdk-utilities:1.0.10")
 
 }

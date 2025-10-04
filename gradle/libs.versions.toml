@@ -15,6 +15,8 @@ material3Version = "1.5.0-alpha04"
 materialIconsExtended = "1.7.8"
 coilCompose = "2.7.0"
 tencentMapVectorSdk = "6.3.0.250311.940c5007.146962199"
+tencent_compose = "1.0.7"
+playServicesMaps = "19.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.17.0" }
@@ -39,6 +41,8 @@ material3 = { group = "androidx.compose.material3", name = "material3", version.
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "materialIconsExtended" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
 tencent-map-vector-sdk = { group = "com.tencent.map", name = "tencent-map-vector-sdk", version.ref = "tencentMapVectorSdk" }
+tencent_compose = { group = "io.github.TheMelody", name = "tencent_compose", version.ref = "tencent_compose" }
+play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
