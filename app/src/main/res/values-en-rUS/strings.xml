@@ -7,7 +7,7 @@
     <string name="climbing_description">Here are some descriptions about climbing</string>
     <string name="ranking">Ranking</string>
     <string name="event">Event</string>
-    <string name="my">Me</string>
+    <string name="profile">Profile</string>
     <string name="promotion_desc">Promotion Image</string>
 
 </resources>
