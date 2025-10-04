@@ -38,6 +38,10 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import edu.csu.dynamicyouth.component.AppFrameworkBottomBar
 import edu.csu.dynamicyouth.component.AppFrameworkTopBar
+import edu.csu.dynamicyouth.screen.EventScreen
+import edu.csu.dynamicyouth.screen.HomeScreen
+import edu.csu.dynamicyouth.screen.ProfileScreen
+import edu.csu.dynamicyouth.screen.RankingScreen
 import edu.csu.dynamicyouth.ui.theme.DynamicYouthTheme
 
 class MainActivity : ComponentActivity() {
@@ -77,7 +81,7 @@ fun AppFramework(modifier: Modifier = Modifier) {
         ),
         BottomNavItem(
             icon = Icons.Filled.Contacts,
-            name = stringResource(R.string.my),
+            name = stringResource(R.string.profile),
             route = "profile"
         )
     )
@@ -95,86 +99,15 @@ fun AppFramework(modifier: Modifier = Modifier) {
                     .padding(innerPadding)
                     .padding(horizontal = 20.dp)
             ) {
-                composable("homepage") { HomePage() }
-                composable("ranking") { RankingPage() }
-                composable("event") { EventPage() }
-                composable("profile") { ProfilePage() }
+                composable("homepage") { HomeScreen() }
+                composable("ranking") { RankingScreen() }
+                composable("event") { EventScreen() }
+                composable("profile") { ProfileScreen() }
             }
         }
     }
 
 }
-
-
-@Composable
-fun HomePage(modifier: Modifier = Modifier) {
-    val scrollState = rememberScrollState()
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(
-                top = 3.dp,
-                bottom = 3.dp)
-    ){
-        Column(
-            modifier = modifier
-                .verticalScroll(scrollState)
-                .fillMaxSize()
-        ) {
-            AsyncImage(
-                model = R.drawable.home_promotional,
-                contentDescription = stringResource(R.string.promotion_desc),
-                modifier = Modifier.fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp))
-            )
-
-            Text(
-                text = "这里是地图",
-                Modifier
-                    .fillMaxWidth()
-            )
-
-            Text(text = stringResource(R.string.climbing_description))
-
-
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter),
-        ) {
-            Spacer(
-                modifier.width(8.dp)
-            )
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                onClick = { /*TODO*/ },
-            ) {
-                Text(text = stringResource(R.string.begin_climb))
-            }
-            Spacer(
-                modifier.width(8.dp)
-            )
-        }
-    }
-}
-
-@Composable
-fun EventPage() {
-    Text(stringResource(R.string.event))
-}
-
-@Composable
-fun RankingPage() {
-    Text(stringResource(R.string.ranking))
-}
-
-@Composable
-fun ProfilePage() {
-    Text(stringResource(R.string.my))
-}
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)

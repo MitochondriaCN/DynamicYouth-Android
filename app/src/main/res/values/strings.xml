@@ -6,6 +6,6 @@
     <string name="climbing_description">这里是一些关于登山的说明</string>
     <string name="ranking">排行榜</string>
     <string name="event">活动</string>
-    <string name="my">我的</string>
+    <string name="profile">我的</string>
     <string name="promotion_desc">首页宣传图</string>
 </resources>
