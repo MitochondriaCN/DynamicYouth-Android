@@ -12,6 +12,7 @@ coilCompose = "2.7.0"
 accompanistPermissions = "0.37.3"
 sdkUtilities = "1.0.10"
 animation = "1.9.2"
+composeMaterial = "1.5.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.17.0" }
