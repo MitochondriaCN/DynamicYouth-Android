@@ -1,15 +1,26 @@
 package edu.csu.dynamicyouth.component
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Campaign
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -130,6 +141,57 @@ fun AnnouncementCard(
     }
 }
 
+@Composable
+fun ClimbButton(status: String = "normal", modifier: Modifier, onClick: () -> Unit)
+{
+    val buttonWidth by animateDpAsState(
+        targetValue = if (status == "loading") 90.dp else 360.dp,
+        label = "widthAnimation"
+    )
+    val buttonHeight by animateDpAsState(
+        targetValue = if (status == "loading") 90.dp else 56.dp,
+        label = "heightAnimation"
+    )
+    Button(
+        modifier = modifier
+            .width(buttonWidth)
+            .height(buttonHeight),
+        onClick = {
+            onClick()
+        },
+    ) {
+        AnimatedContent(
+            targetState = status,
+            transitionSpec = {
+                fadeIn() togetherWith fadeOut()
+            },
+            label = "ButtonContent"
+        ) { status ->
+            when(status)
+            {
+                "normal" -> Text(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp,
+                    letterSpacing = 6.sp,
+                    text = stringResource(R.string.begin_climb)
+                )
+                "loading" -> Box(modifier = Modifier.fillMaxSize()){
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center),
+                        color = MaterialTheme.colorScheme.secondary,
+                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    )
+                }
+                "climbing" -> Text(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp,
+                    letterSpacing = 6.sp,
+                    text = stringResource(R.string.climbing)
+                )
+            }
+        }
+    }
+}
 
 @Preview
 @Composable

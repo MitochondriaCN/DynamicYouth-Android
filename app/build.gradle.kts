@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.tencent.map.vector.sdk)
     implementation(libs.tencentlocationsdk.openplatform)
     implementation(libs.accompanist.permissions)
+    implementation(libs.androidx.compose.animation)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -9,8 +9,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.tencent.tencentmap.mapsdk.maps.MapView
 import com.tencent.tencentmap.mapsdk.maps.TencentMap
-import com.tencent.tencentmap.mapsdk.maps.TextureMapView
 
 
 @Composable
@@ -20,14 +20,13 @@ fun ComposableTencentMap(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    val mapView = remember {
-        TextureMapView(context)
+    val mapView = remember(Unit) {
+        MapView(context)
             .apply {
                 map?.mapType = TencentMap.MAP_TYPE_NEW_3D_IMMERSIVE
             }
     }
 
-    mapView.onResume()
     DisposableEffect(lifecycleOwner, mapView) {
         val lifecycleObserver = LifecycleEventObserver { _, event ->
             when (event) {
@@ -35,6 +34,7 @@ fun ComposableTencentMap(
                 Lifecycle.Event.ON_RESUME -> mapView.onResume()
                 Lifecycle.Event.ON_PAUSE -> mapView.onPause()
                 Lifecycle.Event.ON_STOP -> mapView.onStop()
+                Lifecycle.Event.ON_DESTROY -> mapView.onDestroy()
                 else -> {}
             }
         }
@@ -42,16 +42,16 @@ fun ComposableTencentMap(
         lifecycleOwner.lifecycle.addObserver(lifecycleObserver)
 
         onDispose {
-            mapView.onDestroy()
             lifecycleOwner.lifecycle.removeObserver(lifecycleObserver)
+            mapView.onDestroy()
         }
     }
 
     AndroidView(
         factory = { mapView },
         modifier = modifier,
-        update = {
-            it.map?.mapType = TencentMap.MAP_TYPE_NEW_3D_IMMERSIVE
+        onRelease = {
+            it.onDestroy()
         }
     )
 }

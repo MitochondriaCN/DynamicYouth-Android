@@ -17,5 +17,6 @@
     <string name="ACCESS_BACKGROUND_LOCATION">在后台获取你位置</string>
     <string name="TencentMapSDK_Permission">腾讯地图SDK隐私协议</string>
     <string name="TencentLocationSDK_Permission">腾讯定位SDK隐私协议</string>
+    <string name="climbing">结束登山</string>
 
 </resources>

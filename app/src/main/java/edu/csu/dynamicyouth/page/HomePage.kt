@@ -8,17 +8,14 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,18 +30,20 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import edu.csu.dynamicyouth.R
 import edu.csu.dynamicyouth.component.AnnouncementCard
+import edu.csu.dynamicyouth.component.ClimbButton
 import edu.csu.dynamicyouth.component.ComposableTencentMap
 
 @Preview(showBackground = true)
 @Composable
 fun HomePage(modifier: Modifier = Modifier) {
     var hasAnnouncement by remember { mutableStateOf(true) }
+    var climbStatus by remember { mutableStateOf("normal") }
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(
                 top = 3.dp,
-                bottom = 3.dp
+                bottom = 6.dp
             )
     ) {
         Column(
@@ -87,6 +86,7 @@ fun HomePage(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(280.dp)
+
             ) {
                 ComposableTencentMap(
                     modifier = Modifier.fillMaxSize()
@@ -95,21 +95,25 @@ fun HomePage(modifier: Modifier = Modifier) {
 
 
         }
-        Row(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .padding(
                     start = 8.dp,
-                    end = 8.dp),
+                    end = 8.dp
+                ),
         ) {
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                onClick = { /*TODO*/ },
-            ) {
-                Text(text = stringResource(R.string.begin_climb))
-            }
+            ClimbButton(
+                status = climbStatus,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                onClick = {
+                    climbStatus = if (climbStatus == "loading") {
+                        "normal"
+                    } else {
+                        "loading"
+                    }
+                }
+            )
         }
     }
 }
