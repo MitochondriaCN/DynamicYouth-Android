@@ -40,6 +40,10 @@ import edu.csu.dynamicyouth.page.EventPage
 import edu.csu.dynamicyouth.page.HomePage
 import edu.csu.dynamicyouth.page.ProfilePage
 import edu.csu.dynamicyouth.page.RankingPage
+import edu.csu.dynamicyouth.screen.EventScreen
+import edu.csu.dynamicyouth.screen.HomeScreen
+import edu.csu.dynamicyouth.screen.ProfileScreen
+import edu.csu.dynamicyouth.screen.RankingScreen
 import edu.csu.dynamicyouth.ui.theme.DynamicYouthTheme
 import kotlinx.coroutines.launch
 
