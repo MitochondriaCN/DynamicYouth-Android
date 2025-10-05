@@ -36,9 +36,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import edu.csu.dynamicyouth.R
+import edu.csu.dynamicyouth.component.AnnouncementCard
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier){
+fun HomeScreen(modifier: Modifier = Modifier) {
     val scrollState = rememberScrollState()
     val showAppDescription = remember { mutableStateOf(false) }
     Box(
@@ -46,17 +47,25 @@ fun HomeScreen(modifier: Modifier = Modifier){
             .fillMaxSize()
             .padding(
                 top = 3.dp,
-                bottom = 3.dp)
-    ){
+                bottom = 3.dp
+            )
+    ) {
         Column(
             modifier = modifier
                 .verticalScroll(scrollState)
                 .fillMaxSize()
         ) {
+            AnnouncementCard(
+                modifier = Modifier.fillMaxWidth(),
+                title = "悦动青春Android APP正在开发",
+                content = "浔阳江头夜送客，枫叶荻花秋瑟瑟。主人下马客在船，举酒欲饮无管弦。醉不成欢惨将别，别时茫茫江浸月。"
+            )
+
             AsyncImage(
                 model = R.drawable.home_promotional,
                 contentDescription = stringResource(R.string.promotion_desc),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .clip(
                         shape = RoundedCornerShape(
                             topStart = 10.dp,
@@ -80,7 +89,8 @@ fun HomeScreen(modifier: Modifier = Modifier){
             ) {
                 Box {
                     Text(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .animateContentSize(),
                         text = stringResource(R.string.climbing_description)
                     )
@@ -92,8 +102,6 @@ fun HomeScreen(modifier: Modifier = Modifier){
                 Modifier
                     .fillMaxWidth()
             )
-
-
 
 
         }
@@ -121,6 +129,6 @@ fun HomeScreen(modifier: Modifier = Modifier){
 
 @Preview
 @Composable
-fun Preview(){
+fun Preview() {
     HomeScreen()
 }
