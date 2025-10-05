@@ -147,11 +147,11 @@ fun AnnouncementCard(
 fun ClimbButton(status: String = "normal", modifier: Modifier, onClick: () -> Unit)
 {
     val buttonWidth by animateDpAsState(
-        targetValue = if (status == "loading") 56.dp else 360.dp,
+        targetValue = if (status == "loading") 64.dp else 360.dp,
         label = "widthAnimation"
     )
     val buttonHeight by animateDpAsState(
-        targetValue = if (status == "loading") 56.dp else 56.dp,
+        targetValue = if (status == "loading") 64.dp else 56.dp,
         label = "heightAnimation"
     )
     Button(
