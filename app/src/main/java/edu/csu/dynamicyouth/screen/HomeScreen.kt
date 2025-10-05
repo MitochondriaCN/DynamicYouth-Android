@@ -5,10 +5,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,7 +19,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -30,14 +26,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import edu.csu.dynamicyouth.R
+import edu.csu.dynamicyouth.component.AnnouncementCard
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier){
+fun HomeScreen(modifier: Modifier = Modifier) {
     val scrollState = rememberScrollState()
     val showAppDescription = remember { mutableStateOf(false) }
     Box(
@@ -45,17 +42,27 @@ fun HomeScreen(modifier: Modifier = Modifier){
             .fillMaxSize()
             .padding(
                 top = 3.dp,
-                bottom = 3.dp)
-    ){
+                bottom = 3.dp
+            )
+    ) {
         Column(
             modifier = modifier
                 .verticalScroll(scrollState)
                 .fillMaxSize()
         ) {
+            AnnouncementCard(
+                modifier = Modifier.fillMaxWidth(),
+                title = "悦动青春Android APP正在开发",
+                content = "浔阳江头夜送客，枫叶荻花秋瑟瑟。主人下马客在船，举酒欲饮无管弦。醉不成欢惨将别，别时茫茫江浸月。"
+            )
+
+            Spacer(modifier=Modifier.padding(8.dp))
+
             AsyncImage(
                 model = R.drawable.home_promotional,
                 contentDescription = stringResource(R.string.promotion_desc),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .clip(
                         shape = RoundedCornerShape(
                             topStart = 10.dp,
@@ -79,7 +86,8 @@ fun HomeScreen(modifier: Modifier = Modifier){
             ) {
                 Box {
                     Text(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .animateContentSize(),
                         text = stringResource(R.string.climbing_description)
                     )
@@ -91,8 +99,6 @@ fun HomeScreen(modifier: Modifier = Modifier){
                 Modifier
                     .fillMaxWidth()
             )
-
-
 
 
         }
@@ -116,4 +122,10 @@ fun HomeScreen(modifier: Modifier = Modifier){
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun Preview() {
+    HomeScreen()
 }
