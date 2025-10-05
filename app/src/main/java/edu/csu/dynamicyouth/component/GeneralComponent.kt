@@ -8,8 +8,10 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -145,17 +147,18 @@ fun AnnouncementCard(
 fun ClimbButton(status: String = "normal", modifier: Modifier, onClick: () -> Unit)
 {
     val buttonWidth by animateDpAsState(
-        targetValue = if (status == "loading") 90.dp else 360.dp,
+        targetValue = if (status == "loading") 56.dp else 360.dp,
         label = "widthAnimation"
     )
     val buttonHeight by animateDpAsState(
-        targetValue = if (status == "loading") 90.dp else 56.dp,
+        targetValue = if (status == "loading") 56.dp else 56.dp,
         label = "heightAnimation"
     )
     Button(
         modifier = modifier
             .width(buttonWidth)
             .height(buttonHeight),
+        contentPadding = PaddingValues(0.dp),
         onClick = {
             onClick()
         },
@@ -175,9 +178,10 @@ fun ClimbButton(status: String = "normal", modifier: Modifier, onClick: () -> Un
                     letterSpacing = 6.sp,
                     text = stringResource(R.string.begin_climb)
                 )
-                "loading" -> Box(modifier = Modifier.fillMaxSize()){
+                "loading" -> {
                     CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center),
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(12.dp),
                         color = MaterialTheme.colorScheme.secondary,
                         trackColor = MaterialTheme.colorScheme.surfaceVariant,
                     )
@@ -200,4 +204,28 @@ fun Preview() {
         title = "中南小团子2025年登山活动开始",
         content = "春山如笑，青春激扬。3月25日上午9时，由校团委牵头、校工会、体育教研部、教师工作部、本科生院、研究生院等单位协同主办的中南大学2025年春季登山节启动仪式在岳麓山校区举行，各学院登山代表350余人齐聚一堂，共同见证这场以“趁青春 去登山”为主题的校园盛事。校党委副书记李景升、各有关职能部门、学院主要负责人出席开幕仪式，滴滴出行、中国联通等赞助单位代表共同参与开幕式活动。",
     )
+}
+
+@Preview
+@Composable
+fun PreviewClimbButton() {
+    var climbStatus by remember { mutableStateOf("loading") }
+    Box(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        ClimbButton(
+            status = climbStatus,
+            modifier = Modifier,
+            onClick = {
+                climbStatus = when (climbStatus) {
+                    "normal" -> "loading"
+                    "loading" -> "climbing"
+                    "climbing" -> "normal"
+                    else -> "normal"
+                }
+            }
+        )
+    }
 }
