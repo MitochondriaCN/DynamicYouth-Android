@@ -51,7 +51,7 @@ fun ComposableTencentMap(
         factory = { mapView },
         modifier = modifier,
         update = {
-            it.map.mapType = TencentMap.MAP_TYPE_NEW_3D_IMMERSIVE
+            it.map?.mapType = TencentMap.MAP_TYPE_NEW_3D_IMMERSIVE
         }
     )
 }

@@ -9,5 +9,14 @@
     <string name="event">Event</string>
     <string name="profile">Me</string>
     <string name="promotion_desc">Promotion Image</string>
+    <string name="permission_title">Permission Required</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="permission_denied">Permission Required to Continue</string>
+    <string name="ACCESS_FINE_LOCATION">Access to Your Exact Location</string>
+    <string name="ACCESS_COARSE_LOCATION">Access to Your Approximate Location</string>
+    <string name="ACCESS_BACKGROUND_LOCATION">Access to Your Location in the Background</string>
+    <string name="TencentMapSDK_Permission">Tencent Map SDK Privacy Policy</string>
+    <string name="TencentLocationSDK_Permission">Tencent Location SDK Privacy Policy</string>
 
 </resources>
