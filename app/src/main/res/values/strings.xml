@@ -8,4 +8,14 @@
     <string name="event">活动</string>
     <string name="profile">我的</string>
     <string name="promotion_desc">首页宣传图</string>
+    <string name="permission_title">授权提醒</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="permission_denied">软件正常运行需要授予权限和同意协议</string>
+    <string name="ACCESS_FINE_LOCATION">获取你的精确位置</string>
+    <string name="ACCESS_COARSE_LOCATION">获取你的大致位置</string>
+    <string name="ACCESS_BACKGROUND_LOCATION">在后台获取你位置</string>
+    <string name="TencentMapSDK_Permission">腾讯地图SDK隐私协议</string>
+    <string name="TencentLocationSDK_Permission">腾讯定位SDK隐私协议</string>
+
 </resources>
