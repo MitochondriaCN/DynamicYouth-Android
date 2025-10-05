@@ -90,10 +90,10 @@ fun AppFramework(modifier: Modifier = Modifier) {
                     .padding(innerPadding)
                     .padding(horizontal = 20.dp)
             ) {
-                composable("homepage") { HomePage() }
-                composable("ranking") { RankingPage() }
-                composable("event") { EventPage() }
-                composable("profile") { ProfilePage() }
+                composable("homepage") { HomeScreen() }
+                composable("ranking") { RankingScreen() }
+                composable("event") { EventScreen() }
+                composable("profile") { ProfileScreen() }
             }
         }
     }
