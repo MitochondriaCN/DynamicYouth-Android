@@ -61,6 +61,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 content = "浔阳江头夜送客，枫叶荻花秋瑟瑟。主人下马客在船，举酒欲饮无管弦。醉不成欢惨将别，别时茫茫江浸月。"
             )
 
+            Spacer(modifier=Modifier.padding(8.dp))
+
             AsyncImage(
                 model = R.drawable.home_promotional,
                 contentDescription = stringResource(R.string.promotion_desc),
