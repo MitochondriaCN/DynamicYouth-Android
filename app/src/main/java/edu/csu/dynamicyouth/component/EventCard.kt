@@ -34,10 +34,11 @@ fun EventCard(
     image: Any,
     title: String,
     description: String,
+    isExpanded: Boolean = false,
     onSecondClick: () -> Unit = {}
 ) {
     val animationDurationMillis = 300
-    var isExpanded by remember { mutableStateOf(false) }
+    var isExpanded by remember { mutableStateOf(isExpanded) }
     val animatedRatio by animateFloatAsState(
         targetValue = if (isExpanded) 16f / 9f else 8f / 3f,
         animationSpec = tween(animationDurationMillis)

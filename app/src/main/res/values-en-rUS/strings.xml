@@ -19,5 +19,6 @@
     <string name="TencentMapSDK_Permission">Tencent Map SDK Privacy Policy</string>
     <string name="TencentLocationSDK_Permission">Tencent Location SDK Privacy Policy</string>
     <string name="climbing">End Climbing</string>
+    <string name="cannot_fetch_activity">无法获取活动</string>
 
 </resources>

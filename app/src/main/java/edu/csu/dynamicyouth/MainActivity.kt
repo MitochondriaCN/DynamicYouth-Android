@@ -2,10 +2,12 @@ package edu.csu.dynamicyouth
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,7 +39,7 @@ import com.tencent.tencentmap.mapsdk.maps.TencentMapInitializer
 import edu.csu.dynamicyouth.component.AppFrameworkBottomBar
 import edu.csu.dynamicyouth.component.AppFrameworkTopBar
 import edu.csu.dynamicyouth.component.PermissionDialog
-import edu.csu.dynamicyouth.page.EventPage
+import edu.csu.dynamicyouth.page.ActivityPage
 import edu.csu.dynamicyouth.page.HomePage
 import edu.csu.dynamicyouth.page.ProfilePage
 import edu.csu.dynamicyouth.page.RankingPage
@@ -45,6 +47,7 @@ import edu.csu.dynamicyouth.ui.theme.DynamicYouthTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -65,6 +68,7 @@ data class BottomNavItem(val name: String, val route: String, val icon: ImageVec
 /**
  * 主程序框架
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun AppFramework(modifier: Modifier = Modifier) {
@@ -108,7 +112,7 @@ fun AppFramework(modifier: Modifier = Modifier) {
         BottomNavItem(
             icon = Icons.Filled.AssistantPhoto,
             name = stringResource(R.string.event),
-            route = "event",
+            route = "activity",
         ),
         BottomNavItem(
             icon = Icons.Filled.BarChart,
@@ -164,13 +168,14 @@ fun AppFramework(modifier: Modifier = Modifier) {
             ) {
                 composable(route = "homepage") { HomePage() }
                 composable("ranking") { RankingPage() }
-                composable("event") { EventPage() }
+                composable("activity") { ActivityPage() }
                 composable("profile") { ProfilePage() }
             }
         }
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
