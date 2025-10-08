@@ -14,9 +14,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -35,10 +32,9 @@ fun EventCard(
     title: String,
     description: String,
     isExpanded: Boolean = false,
-    onSecondClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     val animationDurationMillis = 300
-    var isExpanded by remember { mutableStateOf(isExpanded) }
     val animatedRatio by animateFloatAsState(
         targetValue = if (isExpanded) 16f / 9f else 8f / 3f,
         animationSpec = tween(animationDurationMillis)
@@ -47,7 +43,7 @@ fun EventCard(
     Card(
         modifier = modifier
             .animateContentSize(tween(animationDurationMillis))
-            .clickable { if (isExpanded) onSecondClick() else isExpanded = true }
+            .clickable { onClick() }
     ) {
         Column {
             AsyncImage(

@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -24,18 +24,16 @@ fun ActivityPage(modifier: Modifier = Modifier) {
 
     val scrollState = rememberScrollState()
 
-    //TODO: 将EventCard的isExpanded提升到ViewModel
-
     Column(modifier = modifier.verticalScroll(scrollState)) {
         for (a in viewModel.activities) {
-            EventCard(
-                image = a.heroImg ?: R.drawable.home_promotional,
-                title = a.name ?: stringResource(R.string.cannot_fetch_activity),
-                description = a.description ?: stringResource(R.string.cannot_fetch_activity)
-            ) {
-                //TODO: 一个炫酷的放大到详情界面动画
+            key(a.id) {
+                EventCard(
+                    image = a.heroImg ?: R.drawable.home_promotional,
+                    title = a.name ?: stringResource(R.string.cannot_fetch_activity),
+                    description = a.description ?: stringResource(R.string.cannot_fetch_activity),
+                    isExpanded = viewModel.cardExpandedStatus[a.id] ?: false,
+                ) { if (a.id != null) viewModel.handleCardClick(a.id) }
             }
-
             Spacer(modifier = Modifier.padding(10.dp))
         }
     }
