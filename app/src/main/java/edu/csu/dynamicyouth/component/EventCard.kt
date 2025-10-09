@@ -22,8 +22,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 
 /**
- * 活动卡片。该卡片默认是收起状态，第一次点击会转换为扩展状态，第二次点击会调用`onSecondClick()`。
+ * 活动卡片。
  * @param image 活动图片。
+ * @param title 活动标题，最多显示2行。
+ * @param description 活动描述，`isExpanded`为true时才显示，最多显示3行。
+ * @param isExpanded 是否展开。
  */
 @Composable
 fun EventCard(
