@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.androidx.compose.animation)
     implementation(libs.converter.kotlinx.serialization)
     implementation(libs.retrofit)
+    implementation(libs.kotlinx.serialization.json)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
