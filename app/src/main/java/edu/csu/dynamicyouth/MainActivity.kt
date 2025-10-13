@@ -36,6 +36,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tencent.map.geolocation.TencentLocationManager
 import com.tencent.tencentmap.mapsdk.maps.TencentMapInitializer
+import dagger.hilt.android.AndroidEntryPoint
 import edu.csu.dynamicyouth.component.AppFrameworkBottomBar
 import edu.csu.dynamicyouth.component.AppFrameworkTopBar
 import edu.csu.dynamicyouth.component.PermissionDialog
@@ -46,6 +47,7 @@ import edu.csu.dynamicyouth.page.RankingPage
 import edu.csu.dynamicyouth.ui.theme.DynamicYouthTheme
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
