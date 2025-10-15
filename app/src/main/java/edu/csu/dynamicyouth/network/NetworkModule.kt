@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import edu.csu.dynamicyouth.api.UserApi
 import jakarta.inject.Singleton
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -22,28 +23,26 @@ object NetworkModule {
     fun provideTokenManager(@ApplicationContext context: Context): TokenManager {
         return TokenManager(
             context,
-            providePureRetrofitUserApi(providePureOkHttpClient())
+            provideUserApi(provideRetrofit(getPureOkHttpClient()))
         )
     }
 
     @Provides
     @Singleton
-    fun provideInterceptingOkHttpClient(tokenManager: TokenManager): OkHttpClient {
+    fun provideAuthOkHttpClient(tokenManager: TokenManager): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor(tokenManager))
             .build()
     }
 
-    @Provides
-    @Singleton
-    fun providePureOkHttpClient(): OkHttpClient {
+    fun getPureOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .build()
     }
 
     @Provides
     @Singleton
-    fun providePureRetrofitUserApi(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://ydqc.csu.edu.cn/api/v1")
             .client(okHttpClient)
@@ -52,6 +51,11 @@ object NetworkModule {
                 ignoreUnknownKeys = true
             }.asConverterFactory("application/json".toMediaType()))
             .build()
+    }
 
+    @Provides
+    @Singleton
+    fun provideUserApi(retrofit: Retrofit): UserApi {
+        return retrofit.create(UserApi::class.java)
     }
 }
