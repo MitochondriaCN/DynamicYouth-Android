@@ -14,7 +14,6 @@ import java.time.LocalDateTime
  * @author XianlitiCN
  */
 @RequiresApi(Build.VERSION_CODES.O)
-@HiltViewModel
 class ActivityPageViewModel : ViewModel() {
 
     private val _activities = mutableListOf<ActivityVO>()
