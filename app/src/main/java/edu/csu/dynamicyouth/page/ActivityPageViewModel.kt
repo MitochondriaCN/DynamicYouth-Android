@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.csu.dynamicyouth.models.ActivityVO
 import java.time.LocalDateTime
 
