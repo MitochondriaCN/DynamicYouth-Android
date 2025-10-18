@@ -7,7 +7,10 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.csu.dynamicyouth.models.ActivityVO
-import java.time.LocalDateTime
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import java.time.Clock
 
 /**
  * 活动页面的ViewModel。
@@ -41,6 +44,9 @@ class ActivityPageViewModel : ViewModel() {
     fun fetchEvents() {
         //TODO: 从后端获取数据
 
+        val dateTime = LocalDateTime(2025, 10, 19, 1, 30, 48)
+
+
         //测试数据
         _activities.add(
             ActivityVO(
@@ -50,9 +56,9 @@ class ActivityPageViewModel : ViewModel() {
                 heroImg = "https://54sh.csu.edu.cn/__local/D/23/05/FD4E90322198F14563B77730979_27F3676B_AFB8F.png",
                 limitNum = 10,
                 curNum = 5,
-                limitTime = LocalDateTime.now().plusDays(1),
-                createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
+                limitTime = dateTime,
+                createdAt = dateTime,
+                updatedAt = dateTime
             )
         )
 
@@ -64,9 +70,9 @@ class ActivityPageViewModel : ViewModel() {
                 heroImg = "https://54sh.csu.edu.cn/__local/D/23/05/FD4E90322198F14563B77730979_27F3676B_AFB8F.png",
                 limitNum = 10,
                 curNum = 5,
-                limitTime = LocalDateTime.now().plusDays(1),
-                createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
+                limitTime = dateTime,
+                createdAt = dateTime,
+                updatedAt = dateTime
             )
         )
     }

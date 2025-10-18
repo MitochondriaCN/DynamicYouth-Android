@@ -1,5 +1,8 @@
 package edu.csu.dynamicyouth.models
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class UserAdminVO (
     /**
      * 用户头像

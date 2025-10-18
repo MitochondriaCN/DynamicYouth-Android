@@ -1,66 +1,68 @@
 package edu.csu.dynamicyouth.models
 
+import kotlinx.serialization.Serializable
+
 /**
  * UserVO。参考[UserVO](https://gitlab.54sher.com/54shenghua/csu-dynamic-youth-backend/-/blob/263b77f399cdd12625d120edc08d58305f9dde3d/src/main/java/com/csu54sher/csudynamicyouth/vo/UserVO.java)。
  */
-data class UserVO (
+@Serializable
+data class UserVO(
     /**
      * 用户头像
      */
-    val avatar: String? = null,
-
+    val avatar: String?,
     /**
      * 学院名称
      */
-    val college: String? = null,
+    val college: String?,
 
     /**
      * 完成次数
      */
-    val count: Long? = null,
+    val count: Float?,
 
     /**
      * 创建时间
      */
-    val createdAt: String? = null,
+    val createdAt: String?,
 
     /**
      * 用户 ID，使用雪花算法生成
      */
-    val id: String? = null,
+    val id: String?,
 
     /**
      * 学号 / 工号
      */
-    val idNumber: String? = null,
+    val idNumber: String?,
 
     /**
      * 是否是管理员
      */
-    val isAdmin: Boolean? = null,
+    val isAdmin: Boolean?,
 
     /**
      * 是否被封禁
      */
-    val isBanned: Boolean? = null,
+    val isBanned: Boolean?,
 
     /**
      * 是否完善信息
      */
-    val isCompleted: Boolean? = null,
+    val isCompleted: Boolean?,
 
     /**
      * 用户昵称
      */
-    val nickname: String? = null,
+    val nickname: String?,
 
     /**
      * 电话号码
      */
-    val phone: String? = null,
+    val phone: String?,
 
     /**
      * 更新时间
      */
-    val updatedAt: String? = null
+    val updatedAt: String?
 )
