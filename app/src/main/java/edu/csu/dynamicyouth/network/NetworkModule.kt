@@ -14,6 +14,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import edu.csu.dynamicyouth.BuildConfig
+import edu.csu.dynamicyouth.api.RecordApi
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -62,5 +63,11 @@ object NetworkModule {
     @Singleton
     fun provideUserApi(retrofit: Retrofit): UserApi {
         return retrofit.create(UserApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRecordApi(retrofit: Retrofit): RecordApi {
+        return retrofit.create(RecordApi::class.java)
     }
 }

@@ -56,7 +56,8 @@ fun ProfilePage(modifier: Modifier = Modifier) {
     val username by viewModel.username.collectAsState()
     val college by viewModel.college.collectAsState()
     val idNumber by viewModel.idNumber.collectAsState()
-
+    val bestRecord by viewModel.bestRecord.collectAsState()
+    val checkinCount by viewModel.checkinCount.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.fetchUserInfo()
@@ -68,7 +69,8 @@ fun ProfilePage(modifier: Modifier = Modifier) {
         avatarUrl,
         username,
         college,
-        idNumber
+        idNumber,
+        bestRecord
     )
 }
 
@@ -87,7 +89,8 @@ private fun ProfilePageContent(
     avatarUrl: String,
     username: String?,
     college: String?,
-    idNumber: String?
+    idNumber: String?,
+    bestRecord: String?
 ) {
     Column(
         modifier = modifier
@@ -155,7 +158,7 @@ private fun ProfilePageContent(
                 modifier = Modifier.weight(1f),
                 icon = Icons.Filled.WatchLater,
                 title = stringResource(R.string.best_record),
-                content = "00′ 00″"
+                content = bestRecord ?: "00′ 00″"
             )
             InfoCard(
                 modifier = Modifier.weight(1f),
@@ -222,6 +225,7 @@ fun ProfilePagePreview() {
         avatarUrl = "https://54sh.csu.edu.cn/assets/icons/tuanzi_footer.png",
         username = "XianlitiCN",
         college = "法学院",
-        idNumber = null
+        idNumber = null,
+        bestRecord = "12′ 34″"
     )
 }

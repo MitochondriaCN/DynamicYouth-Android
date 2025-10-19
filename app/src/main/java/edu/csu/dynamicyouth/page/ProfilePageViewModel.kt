@@ -1,10 +1,13 @@
 package edu.csu.dynamicyouth.page
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.csu.dynamicyouth.BuildConfig
+import edu.csu.dynamicyouth.api.RecordApi
 import edu.csu.dynamicyouth.api.UserApi
+import edu.csu.dynamicyouth.models.RecordVO
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +15,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class ProfilePageViewModel @Inject constructor(
-    val userApi: UserApi
+    val userApi: UserApi,
+    val recordApi: RecordApi
 ) : ViewModel() {
 
     private val DEFAULT_AVATAR = "https://54sh.csu.edu.cn/assets/icons/tuanzi_footer.png"
@@ -37,6 +41,7 @@ class ProfilePageViewModel @Inject constructor(
     val checkinCount: StateFlow<String?> = _checkinCount
 
 
+    @SuppressLint("DefaultLocale")
     fun fetchUserInfo() {
         viewModelScope.launch {
             val userInfo = userApi.info()
@@ -45,6 +50,28 @@ class ProfilePageViewModel @Inject constructor(
             _username.value = userInfo.data?.nickname
             _college.value = userInfo.data?.college
             _idNumber.value = userInfo.data?.idNumber
+
+            val records = recordApi.listRecord().data
+            if (records != null) {
+                //找出所用时间最短者
+                val shortestRecord = findShortestRecord(records)
+                if (shortestRecord != null) {
+                    val duration = shortestRecord.endTime!! - shortestRecord.startTime!!
+                    //格式化为：mm′ ss″
+                    val minutes = String.format("%02d", duration.inWholeMinutes)
+                    val seconds = String.format("%02d", duration.inWholeSeconds % 60)
+                    _bestRecord.value = "$minutes′ $seconds″"
+                }
+
+            }
         }
+
+    }
+
+    fun findShortestRecord(records: List<RecordVO>): RecordVO? {
+        val validRecords =
+            records.filter { it.isValid == true && it.startTime != null && it.endTime != null }
+        val shortestRecord = validRecords.minByOrNull { it.endTime!! - it.startTime!! }
+        return shortestRecord
     }
 }
