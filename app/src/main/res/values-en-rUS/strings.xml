@@ -21,7 +21,10 @@
     <string name="climbing">End Climbing</string>
     <string name="cannot_fetch_activity">Cannot fetch activities</string>
     <string name="title_activity_auth">Log in</string>
-    <string name="not_logged_in">未登录</string>
-    <string name="unknown_college">未知学院</string>
+    <string name="not_logged_in">Not logged in</string>
+    <string name="unknown_college">Unknown college</string>
+    <string name="unknown_id_number">Unknown ID</string>
+    <string name="best_record">Best record</string>
+    <string name="checkin_count">Check-in count</string>
 
 </resources>

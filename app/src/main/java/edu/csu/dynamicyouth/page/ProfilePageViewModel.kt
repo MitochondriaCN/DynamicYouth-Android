@@ -26,12 +26,23 @@ class ProfilePageViewModel @Inject constructor(
     private val _college = MutableStateFlow<String?>(null)
     val college: StateFlow<String?> = _college
 
+    private val _idNumber = MutableStateFlow<String?>(null)
+    val idNumber: StateFlow<String?> = _idNumber
+
+    private val _bestRecord = MutableStateFlow<String?>(null)
+    val bestRecord: StateFlow<String?> = _bestRecord
+
+    private val _checkinCount = MutableStateFlow<String?>(null)
+    val checkinCount: StateFlow<String?> = _checkinCount
+
+
     fun fetchUserInfo() {
         viewModelScope.launch {
             val userInfo = userApi.info()
             _avatarUrl.value = userInfo.data?.avatar ?: DEFAULT_AVATAR
             _username.value = userInfo.data?.nickname
             _college.value = userInfo.data?.college
+            _idNumber.value = userInfo.data?.idNumber
         }
     }
 }
