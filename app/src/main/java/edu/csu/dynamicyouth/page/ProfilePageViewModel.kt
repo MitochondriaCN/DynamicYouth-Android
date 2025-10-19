@@ -40,6 +40,9 @@ class ProfilePageViewModel @Inject constructor(
     private val _checkinCount = MutableStateFlow<String?>(null)
     val checkinCount: StateFlow<String?> = _checkinCount
 
+    private val _lastRecord = MutableStateFlow<RecordVO?>(null)
+    val lastRecord: StateFlow<RecordVO?> = _lastRecord
+
 
     @SuppressLint("DefaultLocale")
     fun fetchUserInfo() {
@@ -64,10 +67,16 @@ class ProfilePageViewModel @Inject constructor(
                     val seconds = String.format("%02d", duration.inWholeSeconds % 60)
                     _bestRecord.value = "$minutes′ $seconds″"
                 }
+
+                //最近记录
+                //这个不能用，可能会获取到无效记录
+//                _lastRecord.value = recordApi.getLastRecord().data
+                _lastRecord.value = findLastValidRecord(records)
             }
 
             //打卡次数
             _checkinCount.value = userInfo.data?.count.toString()
+
         }
 
     }
@@ -77,5 +86,12 @@ class ProfilePageViewModel @Inject constructor(
             records.filter { it.isValid == true && it.startTime != null && it.endTime != null }
         val shortestRecord = validRecords.minByOrNull { it.endTime!! - it.startTime!! }
         return shortestRecord
+    }
+
+    fun findLastValidRecord(records: List<RecordVO>): RecordVO? {
+        val validRecords =
+            records.filter { it.isValid == true && it.startTime != null && it.endTime != null }
+        val lastRecord = validRecords.maxByOrNull { it.startTime!! }
+        return lastRecord
     }
 }

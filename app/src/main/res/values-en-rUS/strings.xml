@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Dynamic Youth</string>
-    <string name="homepage">HomePage</string>
+    <string name="homepage">Home</string>
     <string name="beijing_time">GMT+8 Time</string>
     <string name="begin_climb">Begin Climbing</string>
     <string name="climbing_description">Here are some descriptions about climbing</string>
@@ -26,5 +26,10 @@
     <string name="unknown_id_number">Unknown ID</string>
     <string name="best_record">Best record</string>
     <string name="checkin_count">Check-in count</string>
+    <string name="recent_record">Last record</string>
+    <string name="finished">Finished</string>
+    <string name="started_at">"Started at: "</string>
+    <string name="unknown">Unknown</string>
+    <string name="ended_at">"Finished at: "</string>
 
 </resources>

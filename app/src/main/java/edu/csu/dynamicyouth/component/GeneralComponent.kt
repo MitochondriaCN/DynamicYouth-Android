@@ -6,17 +6,18 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Campaign
 import androidx.compose.material3.Button
@@ -38,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,6 +53,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import edu.csu.dynamicyouth.BottomNavItem
 import edu.csu.dynamicyouth.R
+import edu.csu.dynamicyouth.ui.theme.Green
+import edu.csu.dynamicyouth.ui.theme.WhiteGrey
 
 @Composable
 fun AppFrameworkBottomBar(
@@ -144,8 +148,7 @@ fun AnnouncementCard(
 }
 
 @Composable
-fun ClimbButton(status: String = "normal", modifier: Modifier, onClick: () -> Unit)
-{
+fun ClimbButton(status: String = "normal", modifier: Modifier, onClick: () -> Unit) {
     val buttonWidth by animateDpAsState(
         targetValue = if (status == "loading") 64.dp else 360.dp,
         label = "widthAnimation"
@@ -170,22 +173,24 @@ fun ClimbButton(status: String = "normal", modifier: Modifier, onClick: () -> Un
             },
             label = "ButtonContent"
         ) { status ->
-            when(status)
-            {
+            when (status) {
                 "normal" -> Text(
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
                     letterSpacing = 6.sp,
                     text = stringResource(R.string.begin_climb)
                 )
+
                 "loading" -> {
                     CircularProgressIndicator(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .padding(12.dp),
                         color = MaterialTheme.colorScheme.secondary,
                         trackColor = MaterialTheme.colorScheme.surfaceVariant,
                     )
                 }
+
                 "climbing" -> Text(
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
@@ -197,12 +202,32 @@ fun ClimbButton(status: String = "normal", modifier: Modifier, onClick: () -> Un
     }
 }
 
+@Composable
+fun TextChip(
+    text: String,
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = Green,
+    foregroundColor: Color = WhiteGrey
+) {
+    Text(
+        modifier = modifier
+            .clip(RoundedCornerShape(15.dp))
+            .background(backgroundColor)
+            .padding(
+                horizontal = 6.dp,
+                vertical = 2.dp
+            ),
+        text = text,
+        color = foregroundColor,
+        style = MaterialTheme.typography.labelMedium,
+    )
+}
+
 @Preview
 @Composable
 fun Preview() {
-    AnnouncementCard(
-        title = "中南小团子2025年登山活动开始",
-        content = "春山如笑，青春激扬。3月25日上午9时，由校团委牵头、校工会、体育教研部、教师工作部、本科生院、研究生院等单位协同主办的中南大学2025年春季登山节启动仪式在岳麓山校区举行，各学院登山代表350余人齐聚一堂，共同见证这场以“趁青春 去登山”为主题的校园盛事。校党委副书记李景升、各有关职能部门、学院主要负责人出席开幕仪式，滴滴出行、中国联通等赞助单位代表共同参与开幕式活动。",
+    TextChip(
+        text = "已完成"
     )
 }
 

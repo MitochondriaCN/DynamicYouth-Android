@@ -25,5 +25,10 @@
     <string name="unknown_id_number">未知学号</string>
     <string name="best_record">最佳纪录</string>
     <string name="checkin_count">打卡次数</string>
+    <string name="recent_record">最近记录</string>
+    <string name="finished">已完成</string>
+    <string name="started_at">开始：</string>
+    <string name="unknown">未知</string>
+    <string name="ended_at">结束：</string>
 
 </resources>

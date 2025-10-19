@@ -18,6 +18,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.DirectionsRun
+import androidx.compose.material.icons.filled.Flag
+import androidx.compose.material.icons.filled.SportsScore
 import androidx.compose.material.icons.filled.TaskAlt
 import androidx.compose.material.icons.filled.WatchLater
 import androidx.compose.material.icons.outlined.PermIdentity
@@ -46,6 +49,9 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import edu.csu.dynamicyouth.R
+import edu.csu.dynamicyouth.component.TextChip
+import edu.csu.dynamicyouth.models.RecordVO
+import edu.csu.dynamicyouth.utils.DateTimeUtils
 
 @Composable
 fun ProfilePage(modifier: Modifier = Modifier) {
@@ -58,6 +64,7 @@ fun ProfilePage(modifier: Modifier = Modifier) {
     val idNumber by viewModel.idNumber.collectAsState()
     val bestRecord by viewModel.bestRecord.collectAsState()
     val checkinCount by viewModel.checkinCount.collectAsState()
+    val lastRecord by viewModel.lastRecord.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.fetchUserInfo()
@@ -71,7 +78,8 @@ fun ProfilePage(modifier: Modifier = Modifier) {
         college,
         idNumber,
         bestRecord,
-        checkinCount
+        checkinCount,
+        lastRecord
     )
 }
 
@@ -92,7 +100,8 @@ private fun ProfilePageContent(
     college: String?,
     idNumber: String?,
     bestRecord: String?,
-    checkinCount: String?
+    checkinCount: String?,
+    lastRecord: RecordVO?
 ) {
     Column(
         modifier = modifier
@@ -169,6 +178,93 @@ private fun ProfilePageContent(
                 content = checkinCount ?: "0"
             )
         }
+
+        Spacer(Modifier.padding(10.dp))
+
+        if (lastRecord != null) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.padding(20.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            modifier = Modifier.size(20.dp),
+                            imageVector = Icons.AutoMirrored.Filled.DirectionsRun,
+                            contentDescription = null,
+                        )
+                        Spacer(
+                            modifier = Modifier.padding(3.dp)
+                        )
+                        Text(
+                            modifier = Modifier.basicMarquee(),
+                            text = stringResource(R.string.recent_record),
+                            style = MaterialTheme.typography.titleMedium,
+                            maxLines = 1,
+                        )
+                    }
+
+                    Spacer(Modifier.padding(10.dp))
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = (lastRecord.endTime!! - lastRecord.startTime!!)
+                                .toComponents { minutes, seconds, _ ->
+                                    String.format("%02d′ %02d″", minutes, seconds)
+                                },
+                            fontSize = 25.sp,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Spacer(Modifier.padding(5.dp))
+                        TextChip(
+                            text = stringResource(R.string.finished)
+                        )
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Flag,
+                            contentDescription = null
+                        )
+                        Spacer(
+                            modifier = Modifier.padding(3.dp)
+                        )
+                        Text(
+                            text = if (lastRecord.startTime != null) stringResource(R.string.started_at)
+                                    + DateTimeUtils.convertInstantToLocalDateTimeFormat(lastRecord.startTime)
+                            else stringResource(R.string.unknown),
+                        )
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.SportsScore,
+                            contentDescription = null
+                        )
+                        Spacer(
+                            modifier = Modifier.padding(3.dp)
+                        )
+                        Text(
+                            text = if (lastRecord.endTime != null) stringResource(R.string.ended_at)
+                                    + DateTimeUtils.convertInstantToLocalDateTimeFormat(lastRecord.endTime)
+                            else stringResource(R.string.unknown),
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -229,6 +325,7 @@ fun ProfilePagePreview() {
         college = "法学院",
         idNumber = null,
         bestRecord = "12′ 34″",
-        checkinCount = "0"
+        checkinCount = "0",
+        lastRecord = null
     )
 }
