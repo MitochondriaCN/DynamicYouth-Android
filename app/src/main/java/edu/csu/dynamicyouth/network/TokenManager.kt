@@ -51,6 +51,9 @@ class TokenManager @Inject constructor(
         val token = withTimeoutOrNull(60000L) { //60s超时
             authResultChannel.receive() //挂起，直到AuthActivity返回
         }
+        if (token != null) {
+            saveToken(token)
+        }
 
         return token
     }

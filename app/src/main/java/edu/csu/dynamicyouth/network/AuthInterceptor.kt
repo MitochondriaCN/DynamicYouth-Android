@@ -1,6 +1,5 @@
 package edu.csu.dynamicyouth.network
 
-import android.util.Log
 import jakarta.inject.Inject
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -10,8 +9,6 @@ class AuthInterceptor @Inject constructor(
     private val tokenManager: TokenManager
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        Log.d("DEV","Intercepting ${chain.request().toString()}")
-
         val token = tokenManager.getExistingToken()
 
         val response: Response

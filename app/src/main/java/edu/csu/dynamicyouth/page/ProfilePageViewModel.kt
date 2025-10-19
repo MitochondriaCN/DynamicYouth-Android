@@ -1,11 +1,8 @@
 package edu.csu.dynamicyouth.page
 
-import android.util.Log
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import edu.csu.dynamicyouth.R
 import edu.csu.dynamicyouth.api.UserApi
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,7 +28,6 @@ class ProfilePageViewModel @Inject constructor(
 
     fun fetchUserInfo() {
         viewModelScope.launch {
-            Log.d("DEV", "Fetching user info")
             val userInfo = userApi.info()
             _avatarUrl.value = userInfo.data?.avatar ?: DEFAULT_AVATAR
             _username.value = userInfo.data?.nickname
