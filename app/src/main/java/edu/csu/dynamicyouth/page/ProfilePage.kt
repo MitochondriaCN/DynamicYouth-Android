@@ -36,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -111,6 +112,7 @@ private fun ProfilePageContent(
                     .fillMaxWidth()
             ) {
                 Text(
+                    modifier = Modifier.basicMarquee(),
                     text = username ?: stringResource(R.string.not_logged_in),
                     style = MaterialTheme.typography.headlineLarge,
                     maxLines = 1,
@@ -133,7 +135,10 @@ private fun ProfilePageContent(
                         contentDescription = null
                     )
                     Text(
-                        modifier = Modifier.padding(start = 5.dp),
+                        modifier = Modifier
+                            .padding(start = 5.dp)
+                            .basicMarquee(),
+                        fontFamily = FontFamily.Monospace,
                         text = idNumber ?: stringResource(R.string.unknown_id_number)
                     )
                 }

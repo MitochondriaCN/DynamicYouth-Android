@@ -31,6 +31,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"https://ydqc.csu.edu.cn/api/v1/\"")
+        }
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://ydqc.csu.edu.cn/api/v1/\"")
         }
     }
     compileOptions {
@@ -44,6 +48,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 

@@ -13,6 +13,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
+import edu.csu.dynamicyouth.BuildConfig
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -47,7 +48,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://ydqc.csu.edu.cn/api/v1/")
+            .baseUrl(BuildConfig.BASE_URL)
             .client(okHttpClient)
             //kotlinx serialization
             .addConverterFactory(Json {
