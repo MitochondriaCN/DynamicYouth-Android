@@ -70,7 +70,8 @@ fun ProfilePage(modifier: Modifier = Modifier) {
         username,
         college,
         idNumber,
-        bestRecord
+        bestRecord,
+        checkinCount
     )
 }
 
@@ -90,7 +91,8 @@ private fun ProfilePageContent(
     username: String?,
     college: String?,
     idNumber: String?,
-    bestRecord: String?
+    bestRecord: String?,
+    checkinCount: String?
 ) {
     Column(
         modifier = modifier
@@ -164,7 +166,7 @@ private fun ProfilePageContent(
                 modifier = Modifier.weight(1f),
                 icon = Icons.Filled.TaskAlt,
                 title = stringResource(R.string.checkin_count),
-                content = "0"
+                content = checkinCount ?: "0"
             )
         }
     }
@@ -226,6 +228,7 @@ fun ProfilePagePreview() {
         username = "XianlitiCN",
         college = "法学院",
         idNumber = null,
-        bestRecord = "12′ 34″"
+        bestRecord = "12′ 34″",
+        checkinCount = "0"
     )
 }

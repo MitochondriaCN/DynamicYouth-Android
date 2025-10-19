@@ -44,6 +44,7 @@ class ProfilePageViewModel @Inject constructor(
     @SuppressLint("DefaultLocale")
     fun fetchUserInfo() {
         viewModelScope.launch {
+            //基本信息
             val userInfo = userApi.info()
             _avatarUrl.value =
                 if (userInfo.data?.avatar != null) BuildConfig.BASE_URL + userInfo.data.avatar else DEFAULT_AVATAR
@@ -51,6 +52,7 @@ class ProfilePageViewModel @Inject constructor(
             _college.value = userInfo.data?.college
             _idNumber.value = userInfo.data?.idNumber
 
+            //最佳纪录
             val records = recordApi.listRecord().data
             if (records != null) {
                 //找出所用时间最短者
@@ -62,8 +64,10 @@ class ProfilePageViewModel @Inject constructor(
                     val seconds = String.format("%02d", duration.inWholeSeconds % 60)
                     _bestRecord.value = "$minutes′ $seconds″"
                 }
-
             }
+
+            //打卡次数
+            _checkinCount.value = userInfo.data?.count.toString()
         }
 
     }
