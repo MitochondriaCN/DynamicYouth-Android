@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.pullToRefresh
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -58,6 +62,7 @@ fun ProfilePage(modifier: Modifier = Modifier) {
     val viewModel: ProfilePageViewModel = hiltViewModel()
 
     val scrollState = rememberScrollState()
+
     val avatarUrl by viewModel.avatarUrl.collectAsState()
     val username by viewModel.username.collectAsState()
     val college by viewModel.college.collectAsState()
@@ -65,22 +70,30 @@ fun ProfilePage(modifier: Modifier = Modifier) {
     val bestRecord by viewModel.bestRecord.collectAsState()
     val checkinCount by viewModel.checkinCount.collectAsState()
     val lastRecord by viewModel.lastRecord.collectAsState()
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.fetchUserInfo()
     }
 
-    ProfilePageContent(
-        modifier,
-        scrollState,
-        avatarUrl,
-        username,
-        college,
-        idNumber,
-        bestRecord,
-        checkinCount,
-        lastRecord
-    )
+    PullToRefreshBox(
+        modifier = Modifier.fillMaxSize(),
+        isRefreshing = isRefreshing,
+        onRefresh = { viewModel.fetchUserInfo() }
+    ) {
+        ProfilePageContent(
+            modifier,
+            scrollState,
+            avatarUrl,
+            username,
+            college,
+            idNumber,
+            bestRecord,
+            checkinCount,
+            lastRecord
+        )
+    }
+
 }
 
 /**

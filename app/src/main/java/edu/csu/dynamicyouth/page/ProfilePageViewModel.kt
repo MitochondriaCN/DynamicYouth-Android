@@ -43,9 +43,13 @@ class ProfilePageViewModel @Inject constructor(
     private val _lastRecord = MutableStateFlow<RecordVO?>(null)
     val lastRecord: StateFlow<RecordVO?> = _lastRecord
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
+
 
     @SuppressLint("DefaultLocale")
     fun fetchUserInfo() {
+        _isRefreshing.value = true
         viewModelScope.launch {
             //基本信息
             val userInfo = userApi.info()
@@ -77,6 +81,7 @@ class ProfilePageViewModel @Inject constructor(
             //打卡次数
             _checkinCount.value = userInfo.data?.count.toString()
 
+            _isRefreshing.value = false
         }
 
     }
