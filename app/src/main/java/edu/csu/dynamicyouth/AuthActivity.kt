@@ -2,7 +2,6 @@ package edu.csu.dynamicyouth
 
 import android.os.Bundle
 import android.webkit.CookieManager
-import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
@@ -73,15 +72,17 @@ class AuthActivity : ComponentActivity() {
                             settings.domStorageEnabled = true
                             webViewClient = object : WebViewClient() {
 
-                                override fun shouldOverrideUrlLoading(
-                                    view: WebView?,
-                                    request: WebResourceRequest?
-                                ): Boolean {
+                                override fun onPageFinished(view: WebView?, url: String?) {
+                                    super.onPageFinished(view, url)
 
-                                    // 参考URL:
-                                    // https://ydqc.csu.edu.cn/api/v1/login/oauth2/code/csu?code=OC3778MqnTjk0GZkacjTOtuocIsKviTuUH25&state=JZrQ-DEE528JtQDrBZ0dbXZFYrp0za7t2nCXaB1vg1Y%3D
-                                    if (request?.url.toString()
-                                            .contains("https://ydqc.csu.edu.cn/api/v1/login/oauth2/code/csu?code")
+                                    /*
+                                     * 参考URL: https://ydqc.csu.edu.cn/api/v1/login/oauth2/code/csu?code=OC3778MqnTjk0GZkacjTOtuocIsKviTuUH25&state=JZrQ-DEE528JtQDrBZ0dbXZFYrp0za7t2nCXaB1vg1Y%3D
+                                     * 检测URL: https://ydqc.csu.edu.cn/
+                                     * 为什么不检测参考URL？
+                                     * 因为参考URL返回的是一个302响应，重定向到检测URL，同时这个响应中带有Set-Cookie。直接检测参考URL是不行的，因为302响应
+                                     * 并不会触发onPageFinished。所以应当检测这个URL，因为可以断言这时候已经保存了cookie。
+                                     */
+                                    if (url.toString().equals("https://ydqc.csu.edu.cn/")
                                     ) {
                                         val cookies = CookieManager.getInstance()
                                             .getCookie("https://ydqc.csu.edu.cn")
@@ -91,17 +92,8 @@ class AuthActivity : ComponentActivity() {
                                         //获取等号后面的部分
                                         val token = tokenPart?.split('=')?.get(1)
 
-                                        tokenManager.sendTokenResult(token)
-                                        finish()
+                                        finish(token)
                                     }
-                                    return false
-                                }
-
-                                override fun shouldOverrideUrlLoading(
-                                    view: WebView?,
-                                    url: String?
-                                ): Boolean {
-                                    return false
                                 }
                             }
                             loadUrl(url)

@@ -2,6 +2,7 @@ package edu.csu.dynamicyouth.network
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -55,6 +56,7 @@ class TokenManager @Inject constructor(
             saveToken(token)
         }
 
+        Log.d("DEV", "getNewToken: $token")
         return token
     }
 
