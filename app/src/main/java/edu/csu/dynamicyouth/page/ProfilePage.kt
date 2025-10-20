@@ -304,8 +304,9 @@ private fun InfoCard(
 
             Spacer(Modifier.padding(10.dp))
             Text(
+                modifier = Modifier.basicMarquee(),
                 text = content,
-                fontSize = 40.sp,
+                fontSize = 35.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 fontWeight = FontWeight.Bold
