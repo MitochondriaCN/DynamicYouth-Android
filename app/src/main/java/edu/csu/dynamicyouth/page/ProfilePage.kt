@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -21,18 +20,20 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.DirectionsRun
 import androidx.compose.material.icons.filled.Flag
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.SportsScore
+import androidx.compose.material.icons.filled.Task
 import androidx.compose.material.icons.filled.TaskAlt
 import androidx.compose.material.icons.filled.WatchLater
 import androidx.compose.material.icons.outlined.PermIdentity
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material3.Card
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
-import androidx.compose.material3.pulltorefresh.pullToRefresh
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -51,14 +52,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import edu.csu.dynamicyouth.R
+import edu.csu.dynamicyouth.component.SettingItem
 import edu.csu.dynamicyouth.component.TextChip
 import edu.csu.dynamicyouth.models.RecordVO
 import edu.csu.dynamicyouth.utils.DateTimeUtils
 
 @Composable
-fun ProfilePage(modifier: Modifier = Modifier) {
+fun ProfilePage(
+    modifier: Modifier = Modifier,
+    navController: NavController
+) {
     val viewModel: ProfilePageViewModel = hiltViewModel()
 
     val scrollState = rememberScrollState()
@@ -91,7 +97,9 @@ fun ProfilePage(modifier: Modifier = Modifier) {
             bestRecord,
             checkinCount,
             lastRecord
-        )
+        ) { route ->
+            navController.navigate(route)
+        }
     }
 
 }
@@ -114,7 +122,8 @@ private fun ProfilePageContent(
     idNumber: String?,
     bestRecord: String?,
     checkinCount: String?,
-    lastRecord: RecordVO?
+    lastRecord: RecordVO?,
+    onClickSettings: (route: String) -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -278,7 +287,39 @@ private fun ProfilePageContent(
                 }
             }
         }
+
+        Spacer(Modifier.padding(10.dp))
+
+        SettingOptions(onClickSettings = onClickSettings)
     }
+}
+
+@Composable
+private fun SettingOptions(
+    modifier: Modifier = Modifier,
+    onClickSettings: (route: String) -> Unit = {}
+) {
+    SettingItem(
+        icon = Icons.Filled.Task,
+        text = stringResource(R.string.records),
+        onClick = { onClickSettings("records") }
+    )
+
+    HorizontalDivider()
+
+    SettingItem(
+        icon = Icons.Filled.Person,
+        text = stringResource(R.string.edit_profile),
+        onClick = { onClickSettings("edit_profile") }
+    )
+
+    HorizontalDivider()
+
+    SettingItem(
+        icon = Icons.Filled.Info,
+        text = stringResource(R.string.about),
+        onClick = { onClickSettings("about") }
+    )
 }
 
 @Composable

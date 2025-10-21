@@ -40,6 +40,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import edu.csu.dynamicyouth.component.AppFrameworkBottomBar
 import edu.csu.dynamicyouth.component.AppFrameworkTopBar
 import edu.csu.dynamicyouth.component.PermissionDialog
+import edu.csu.dynamicyouth.page.AboutPage
 import edu.csu.dynamicyouth.page.ActivityPage
 import edu.csu.dynamicyouth.page.HomePage
 import edu.csu.dynamicyouth.page.ProfilePage
@@ -169,7 +170,9 @@ fun AppFramework(modifier: Modifier = Modifier) {
                 composable(route = "homepage") { HomePage() }
                 composable("ranking") { RankingPage() }
                 composable("activity") { ActivityPage() }
-                composable("profile") { ProfilePage() }
+                composable("profile") { ProfilePage(navController = navController) }
+
+                composable("about") { AboutPage() }
             }
         }
     }

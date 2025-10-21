@@ -16,7 +16,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import edu.csu.dynamicyouth.R
 import edu.csu.dynamicyouth.component.EventCard
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ActivityPage(modifier: Modifier = Modifier) {
     //隐式依赖模式的ViewModel，因为每个页面的ViewModel具有专一性

@@ -30,5 +30,8 @@
     <string name="started_at">开始：</string>
     <string name="unknown">未知</string>
     <string name="ended_at">结束：</string>
+    <string name="records">登山记录</string>
+    <string name="edit_profile">修改个人资料</string>
+    <string name="about">关于</string>
 
 </resources>

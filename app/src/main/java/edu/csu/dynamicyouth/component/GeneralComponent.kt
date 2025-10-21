@@ -1,5 +1,6 @@
 package edu.csu.dynamicyouth.component
 
+import android.graphics.drawable.Icon
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
@@ -7,6 +8,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,9 +19,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.Campaign
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -41,6 +48,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -223,12 +231,46 @@ fun TextChip(
     )
 }
 
+@Composable
+fun SettingItem(
+    modifier: Modifier = Modifier,
+    icon: ImageVector,
+    text: String,
+    onClick: () -> Unit = {}
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(
+                horizontal = 10.dp,
+                vertical = 15.dp
+            ),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null
+        )
+        Spacer(Modifier.padding(5.dp))
+        Text(
+            modifier = Modifier.basicMarquee(),
+            text = text,
+            style = MaterialTheme.typography.titleMedium
+        )
+        Spacer(Modifier.weight(1f))
+        Icon(
+            modifier = Modifier.size(15.dp),
+            imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+            contentDescription = null
+        )
+    }
+}
+
 @Preview
 @Composable
 fun Preview() {
-    TextChip(
-        text = "已完成"
-    )
+    SettingItem(icon = Icons.Default.Campaign, text = "查看所有记录") { }
 }
 
 @Preview
