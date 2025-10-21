@@ -25,7 +25,7 @@ object NetworkModule {
     fun provideTokenManager(@ApplicationContext context: Context): TokenManager {
         return TokenManager(
             context,
-            provideUserApi(provideRetrofit(getPureOkHttpClient()))
+            provideUserApi(provideRetrofit(getPureOkHttpClient(), provideJson()))
         )
     }
 
@@ -33,7 +33,7 @@ object NetworkModule {
     @Singleton
     fun provideAuthOkHttpClient(tokenManager: TokenManager): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor(tokenManager))
+            .addInterceptor(AuthInterceptor(tokenManager, provideJson()))
 //            .addInterceptor(HttpLoggingInterceptor().apply {
 //                level = HttpLoggingInterceptor.Level.HEADERS
 //            })
@@ -47,16 +47,22 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient, json: Json): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .client(okHttpClient)
             //kotlinx serialization
-            .addConverterFactory(Json {
-                ignoreUnknownKeys = true
-                coerceInputValues = true
-            }.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideJson(): Json {
+        return Json {
+            ignoreUnknownKeys = true
+            coerceInputValues = true
+        }
     }
 
     @Provides

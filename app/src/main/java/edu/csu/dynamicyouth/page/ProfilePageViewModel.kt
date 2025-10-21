@@ -1,6 +1,7 @@
 package edu.csu.dynamicyouth.page
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -53,6 +54,7 @@ class ProfilePageViewModel @Inject constructor(
         viewModelScope.launch {
             //基本信息
             val userInfo = userApi.info()
+            Log.d("DEV", "Fetched ${userInfo}")
             _avatarUrl.value =
                 if (userInfo.data?.avatar != null) BuildConfig.BASE_URL + userInfo.data.avatar else DEFAULT_AVATAR
             _username.value = userInfo.data?.nickname
@@ -79,7 +81,8 @@ class ProfilePageViewModel @Inject constructor(
             }
 
             //打卡次数
-            _checkinCount.value = userInfo.data?.count.toString()
+            _checkinCount.value = userInfo.data?.count?.toString()
+
 
             _isRefreshing.value = false
         }
