@@ -290,19 +290,19 @@ private fun ProfilePageContent(
 
         Spacer(Modifier.padding(10.dp))
 
-        SettingOptions(onClickSettings = onClickSettings)
+        SettingOptions(onClickSetting = onClickSettings)
     }
 }
 
 @Composable
 private fun SettingOptions(
     modifier: Modifier = Modifier,
-    onClickSettings: (route: String) -> Unit = {}
+    onClickSetting: (route: String) -> Unit = {}
 ) {
     SettingItem(
         icon = Icons.Filled.Task,
         text = stringResource(R.string.records),
-        onClick = { onClickSettings("records") }
+        onClick = { onClickSetting("records") }
     )
 
     HorizontalDivider()
@@ -310,7 +310,7 @@ private fun SettingOptions(
     SettingItem(
         icon = Icons.Filled.Person,
         text = stringResource(R.string.edit_profile),
-        onClick = { onClickSettings("edit_profile") }
+        onClick = { onClickSetting("edit_profile") }
     )
 
     HorizontalDivider()
@@ -318,7 +318,7 @@ private fun SettingOptions(
     SettingItem(
         icon = Icons.Filled.Info,
         text = stringResource(R.string.about),
-        onClick = { onClickSettings("about") }
+        onClick = { onClickSetting("about") }
     )
 }
 

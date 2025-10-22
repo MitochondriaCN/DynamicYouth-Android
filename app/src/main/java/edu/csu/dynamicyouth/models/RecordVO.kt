@@ -2,6 +2,7 @@ package edu.csu.dynamicyouth.models
 
 import kotlinx.serialization.Serializable
 import kotlinx.datetime.Instant
+import kotlinx.serialization.SerialName
 
 @Serializable
 data class RecordVO(
@@ -31,7 +32,7 @@ data class RecordVO(
     /**
      * 状态
      */
-    val status: Status? = null,
+    val status: RecordStatus? = null,
 
     val updatedAt: String? = null
 )
@@ -40,13 +41,18 @@ data class RecordVO(
  * 状态
  */
 @Serializable
-enum class Status(val value: String) {
+enum class RecordStatus(val value: String) {
+    @SerialName("CANCELLED")
     Cancelled("CANCELLED"),
+
+    @SerialName("FINISHED")
     Finished("FINISHED"),
+
+    @SerialName("PENDING")
     Pending("PENDING");
 
     companion object {
-        public fun fromValue(value: String): Status = when (value) {
+        public fun fromValue(value: String): RecordStatus = when (value) {
             "CANCELLED" -> Cancelled
             "FINISHED" -> Finished
             "PENDING" -> Pending

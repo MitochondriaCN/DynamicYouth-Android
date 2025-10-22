@@ -33,5 +33,7 @@
     <string name="records">登山记录</string>
     <string name="edit_profile">修改个人资料</string>
     <string name="about">关于</string>
+    <string name="cancelled">已取消</string>
+    <string name="pending">进行中</string>
 
 </resources>

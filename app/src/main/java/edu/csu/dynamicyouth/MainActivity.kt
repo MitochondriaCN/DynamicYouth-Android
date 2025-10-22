@@ -23,9 +23,12 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -45,6 +48,7 @@ import edu.csu.dynamicyouth.page.ActivityPage
 import edu.csu.dynamicyouth.page.HomePage
 import edu.csu.dynamicyouth.page.ProfilePage
 import edu.csu.dynamicyouth.page.RankingPage
+import edu.csu.dynamicyouth.page.RecordPage
 import edu.csu.dynamicyouth.ui.theme.DynamicYouthTheme
 import kotlinx.coroutines.launch
 
@@ -80,6 +84,53 @@ fun AppFramework(modifier: Modifier = Modifier) {
 
     val deniedMessage = stringResource(R.string.permission_denied)
 
+    val navigationItems = listOf(
+        BottomNavItem(
+            icon = Icons.Filled.Home,
+            name = stringResource(R.string.homepage),
+            route = "homepage",
+        ),
+        BottomNavItem(
+            icon = Icons.Filled.AssistantPhoto,
+            name = stringResource(R.string.event),
+            route = "activity",
+        ),
+        BottomNavItem(
+            icon = Icons.Filled.BarChart,
+            name = stringResource(R.string.ranking),
+            route = "ranking",
+        ),
+        BottomNavItem(
+            icon = Icons.Filled.Contacts,
+            name = stringResource(R.string.profile),
+            route = "profile"
+        )
+    )
+
+    var currentTitle by remember { mutableStateOf(navigationItems.first().name) }
+    //单独定义的标题，供navController使用，因为在DestinationChangedListener中不能用stringResource()
+    //这是一个有碍观瞻的方法，希望后来者可以改进
+    val aboutTitle = stringResource(R.string.about)
+    val recordsTitle = stringResource(R.string.records)
+
+
+    LaunchedEffect(navController) {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            val newTitle = when (destination.route) {
+                "homepage" -> navigationItems.find { it.route == "homepage" }?.name
+                "activity" -> navigationItems.find { it.route == "activity" }?.name
+                "ranking" -> navigationItems.find { it.route == "ranking" }?.name
+                "profile" -> navigationItems.find { it.route == "profile" }?.name
+                "about" -> aboutTitle
+                "records" -> recordsTitle
+                else -> ""
+            }
+            if (newTitle != null) {
+                currentTitle = newTitle
+            }
+        }
+    }
+
     PermissionDialog(
         permissions =
             mapOf(
@@ -104,28 +155,6 @@ fun AppFramework(modifier: Modifier = Modifier) {
         }
     )
 
-    val navigationItems = listOf(
-        BottomNavItem(
-            icon = Icons.Filled.Home,
-            name = stringResource(R.string.homepage),
-            route = "homepage",
-        ),
-        BottomNavItem(
-            icon = Icons.Filled.AssistantPhoto,
-            name = stringResource(R.string.event),
-            route = "activity",
-        ),
-        BottomNavItem(
-            icon = Icons.Filled.BarChart,
-            name = stringResource(R.string.ranking),
-            route = "ranking",
-        ),
-        BottomNavItem(
-            icon = Icons.Filled.Contacts,
-            name = stringResource(R.string.profile),
-            route = "profile"
-        )
-    )
 
     DynamicYouthTheme {
         Scaffold(
@@ -133,7 +162,7 @@ fun AppFramework(modifier: Modifier = Modifier) {
             snackbarHost = {
                 SnackbarHost(hostState = snackBarHostState)
             },
-            topBar = { AppFrameworkTopBar() },
+            topBar = { AppFrameworkTopBar(currentTitle) },
             bottomBar = { AppFrameworkBottomBar(navController, navigationItems) }
         ) { innerPadding ->
             NavHost(
@@ -173,6 +202,7 @@ fun AppFramework(modifier: Modifier = Modifier) {
                 composable("profile") { ProfilePage(navController = navController) }
 
                 composable("about") { AboutPage() }
+                composable("records") { RecordPage() }
             }
         }
     }

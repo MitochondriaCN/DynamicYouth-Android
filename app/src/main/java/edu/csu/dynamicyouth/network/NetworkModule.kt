@@ -15,6 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import edu.csu.dynamicyouth.BuildConfig
 import edu.csu.dynamicyouth.api.RecordApi
+import okhttp3.logging.HttpLoggingInterceptor
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -35,7 +36,7 @@ object NetworkModule {
         return OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor(tokenManager, provideJson()))
 //            .addInterceptor(HttpLoggingInterceptor().apply {
-//                level = HttpLoggingInterceptor.Level.HEADERS
+//                level = HttpLoggingInterceptor.Level.BODY
 //            })
             .build()
     }
