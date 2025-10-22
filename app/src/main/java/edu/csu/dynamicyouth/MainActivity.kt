@@ -45,6 +45,7 @@ import edu.csu.dynamicyouth.component.AppFrameworkTopBar
 import edu.csu.dynamicyouth.component.PermissionDialog
 import edu.csu.dynamicyouth.page.AboutPage
 import edu.csu.dynamicyouth.page.ActivityPage
+import edu.csu.dynamicyouth.page.EditProfilePage
 import edu.csu.dynamicyouth.page.HomePage
 import edu.csu.dynamicyouth.page.ProfilePage
 import edu.csu.dynamicyouth.page.RankingPage
@@ -112,6 +113,8 @@ fun AppFramework(modifier: Modifier = Modifier) {
     //这是一个有碍观瞻的方法，希望后来者可以改进
     val aboutTitle = stringResource(R.string.about)
     val recordsTitle = stringResource(R.string.records)
+    val editProfileTitle = stringResource(R.string.edit_profile)
+
 
 
     LaunchedEffect(navController) {
@@ -123,7 +126,8 @@ fun AppFramework(modifier: Modifier = Modifier) {
                 "profile" -> navigationItems.find { it.route == "profile" }?.name
                 "about" -> aboutTitle
                 "records" -> recordsTitle
-                else -> ""
+                "edit_profile" -> editProfileTitle
+                else -> currentTitle
             }
             if (newTitle != null) {
                 currentTitle = newTitle
@@ -203,6 +207,7 @@ fun AppFramework(modifier: Modifier = Modifier) {
 
                 composable("about") { AboutPage() }
                 composable("records") { RecordPage() }
+                composable("edit_profile") { EditProfilePage() }
             }
         }
     }

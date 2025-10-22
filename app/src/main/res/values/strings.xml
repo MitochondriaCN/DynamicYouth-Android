@@ -35,5 +35,10 @@
     <string name="about">关于</string>
     <string name="cancelled">已取消</string>
     <string name="pending">进行中</string>
+    <string name="avatar">头像</string>
+    <string name="nickname">昵称</string>
+    <string name="college">学院</string>
+    <string name="phone_number">手机号码</string>
+    <string name="submit">提交</string>
 
 </resources>
