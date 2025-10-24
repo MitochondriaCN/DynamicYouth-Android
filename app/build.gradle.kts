@@ -79,6 +79,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.logging.interceptor)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.androidx.room.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

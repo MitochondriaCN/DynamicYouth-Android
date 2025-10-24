@@ -1,5 +1,7 @@
 package edu.csu.dynamicyouth.page
 
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,10 +23,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import edu.csu.dynamicyouth.R
 import edu.csu.dynamicyouth.component.HorizontalOptionItem
@@ -33,7 +37,8 @@ import edu.csu.dynamicyouth.component.WheelPickerDialog
 
 @Composable
 fun EditProfilePage(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
 
     val viewModel: EditProfilePageViewModel = hiltViewModel()
@@ -42,6 +47,7 @@ fun EditProfilePage(
     var showCollegeDialog by remember { mutableStateOf(false) }
     var showPhoneNumberDialog by remember { mutableStateOf(false) }
 
+    val context = LocalContext.current
 
     val avatarPicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
@@ -54,6 +60,31 @@ fun EditProfilePage(
 
     LaunchedEffect(Unit) {
         viewModel.fetchUserInfo()
+    }
+
+    val updateResult by viewModel.updateResult.collectAsState()
+    LaunchedEffect(updateResult) {
+        Log.d("DEV", "updateResult: $updateResult")
+        when (updateResult) {
+            is UpdateResult.Error -> {
+                Toast.makeText(
+                    context,
+                    (updateResult as UpdateResult.Error).message,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            is UpdateResult.Success -> {
+                Toast.makeText(
+                    context,
+                    (updateResult as UpdateResult.Success).message,
+                    Toast.LENGTH_SHORT
+                ).show()
+                navController.popBackStack()
+            }
+
+            is UpdateResult.Idle -> {}
+        }
     }
 
     EditProfilePageContent(
@@ -78,6 +109,7 @@ fun EditProfilePage(
         onRequestingPhoneNumberChange = {
             showPhoneNumberDialog = true
         },
+        isSubmitting = viewModel.isSubmitting.collectAsState().value,
         modifiedFields = viewModel.modifiedFields.collectAsState().value,
         onSubmit = { viewModel.checkAndSubmit() }
     )

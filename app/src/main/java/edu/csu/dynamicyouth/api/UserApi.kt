@@ -2,6 +2,7 @@ package edu.csu.dynamicyouth.api
 
 import edu.csu.dynamicyouth.models.PageResponseListUserAdminVO
 import edu.csu.dynamicyouth.models.UserVO
+import kotlinx.serialization.Serializable
 import retrofit2.http.*
 
 interface UserApi {
@@ -15,10 +16,11 @@ interface UserApi {
     ): ApiResponse<UserVO>
 
     //美哉，Kotlin！接口里面能定义类
+    @Serializable
     data class UpdateDto(
-        val nickname: String?,
-        val idNumber: String?,
-        val college: String?,
+        val nickname: String,
+        val avatar: String?,
+        val college: String,
         val phone: String?
     )
 
