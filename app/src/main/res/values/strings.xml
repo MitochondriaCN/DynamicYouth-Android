@@ -40,5 +40,11 @@
     <string name="college">学院</string>
     <string name="phone_number">手机号码</string>
     <string name="submit">提交</string>
+    <string name="sher">升华工作室</string>
+    <string name="backend_developer">后端开发</string>
+    <string name="full_stack_dveloper">全栈开发</string>
+    <string name="android_developer">Android 开发</string>
+    <string name="anti_cheat">反作弊</string>
+    <string name="tester">测试</string>
 
 </resources>

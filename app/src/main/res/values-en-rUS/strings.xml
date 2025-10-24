@@ -41,5 +41,11 @@
     <string name="college">College</string>
     <string name="phone_number">Phone</string>
     <string name="submit">Submit</string>
+    <string name="sher">升华工作室</string>
+    <string name="backend_developer">Backend</string>
+    <string name="full_stack_dveloper">Full Stack</string>
+    <string name="android_developer">Android</string>
+    <string name="anti_cheat">Anti-cheating</string>
+    <string name="tester">Testing</string>
 
 </resources>
