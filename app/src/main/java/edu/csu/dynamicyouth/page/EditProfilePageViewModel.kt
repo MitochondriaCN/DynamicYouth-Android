@@ -1,20 +1,31 @@
 package edu.csu.dynamicyouth.page
 
+import android.net.Uri
+import android.provider.OpenableColumns
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.csu.dynamicyouth.BuildConfig
+import edu.csu.dynamicyouth.api.UploadFileApi
 import edu.csu.dynamicyouth.api.UserApi
-import edu.csu.dynamicyouth.network.TokenManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
+import edu.csu.dynamicyouth.api.CollegeApi
 
 @HiltViewModel
 class EditProfilePageViewModel @Inject constructor(
     private val userApi: UserApi,
+    private val uploadFileApi: UploadFileApi,
+    private val collegeApi: CollegeApi,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     //唉唉，样板代码
@@ -27,8 +38,20 @@ class EditProfilePageViewModel @Inject constructor(
     private val _college = MutableStateFlow<String?>(null)
     val college: StateFlow<String?> = _college
 
+    private val _csuColleges = MutableStateFlow<List<String>?>(null)
+    val csuColleges: StateFlow<List<String>?> = _csuColleges
+
     private val _phoneNumber = MutableStateFlow<String?>(null)
     val phoneNumber: StateFlow<String?> = _phoneNumber
+
+    fun updateAvatar(localUri: Uri) {
+        _avatarUrl.value = localUri.toString()
+    }
+
+    fun updateNickname(nickname: String) {
+        _nickname.value = nickname
+    }
+
 
     fun fetchUserInfo() {
         viewModelScope.launch {
@@ -38,6 +61,48 @@ class EditProfilePageViewModel @Inject constructor(
                 _nickname.value = userInfo.nickname
                 _college.value = userInfo.college
                 _phoneNumber.value = userInfo.phone
+            }
+
+            //获取学院列表
+            val collegeList = collegeApi.listAll().data
+            if (collegeList != null) {
+                //去null
+                _csuColleges.value = collegeList.filter { it.name != null }.map { it.name!! }
+            }
+        }
+    }
+
+    fun updateCollege(college: String) {
+        _college.value = college
+    }
+
+    fun updatePhoneNumber(phoneNumber: String) {
+        _phoneNumber.value = phoneNumber
+    }
+
+    private fun uploadNewAvatar(localUri: Uri) {
+        viewModelScope.launch {
+            try {
+                context.contentResolver.openInputStream(localUri)?.use { inputStream ->
+                    val fileBytes = inputStream.readBytes()
+                    val requestFile = fileBytes.toRequestBody(
+                        context.contentResolver.getType(localUri)?.toMediaTypeOrNull()
+                    )
+
+                    //从URI获取文件名
+                    var fileName = "unknown"
+                    context.contentResolver.query(localUri, null, null, null, null)?.use { cursor ->
+                        if (cursor.moveToFirst()) {
+                            fileName =
+                                cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME))
+                        }
+                    }
+                    val body = MultipartBody.Part.createFormData("file", fileName, requestFile)
+                    val response = uploadFileApi.uploadAvatar(body)
+                    _avatarUrl.value = BuildConfig.BASE_URL + response.data
+                }
+            } catch (e: Exception) {
+                Log.e("EditProfilePageViewModel", "Avatar upload failed", e)
             }
         }
     }

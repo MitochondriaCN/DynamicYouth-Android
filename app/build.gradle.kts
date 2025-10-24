@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.material3)
     implementation(libs.androidx.compose.material.icons.extended)
@@ -94,5 +95,7 @@ dependencies {
 
     implementation("com.google.dagger:hilt-android:2.57.2")
     ksp("com.google.dagger:hilt-android-compiler:2.57.2")
+    implementation("com.github.yalantis:ucrop:2.2.11-native")
+    implementation("com.seo4d696b75.compose:material3-picker:0.1.6")
 
 }

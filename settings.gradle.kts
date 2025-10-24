@@ -17,6 +17,8 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
 
+        maven { url = uri("https://jitpack.io") }
+
         //以下腾讯地图SDK
         maven {
             url = uri("https://repo1.maven.org/maven2")

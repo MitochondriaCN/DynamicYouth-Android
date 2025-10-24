@@ -1,5 +1,6 @@
 [versions]
 agp = "8.13.0"
+appcompat = "1.7.1"
 foundation = "0.7.0.92a115a"
 kotlin = "2.2.20"
 junit = "4.13.2"
@@ -22,6 +23,7 @@ loggingInterceptor = "5.0.0-alpha.16"
 kotlinxDatetime = "0.7.0-0.6.x-compat"
 
 [libraries]
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.17.0" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelCompose" }
