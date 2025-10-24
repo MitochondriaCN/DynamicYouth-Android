@@ -78,6 +78,7 @@ fun EditProfilePage(
         onRequestingPhoneNumberChange = {
             showPhoneNumberDialog = true
         },
+        modifiedFields = viewModel.modifiedFields.collectAsState().value,
         onSubmit = { viewModel.checkAndSubmit() }
     )
 
@@ -127,6 +128,7 @@ private fun EditProfilePageContent(
     nickname: String?,
     college: String?,
     phoneNumber: String?,
+    modifiedFields: EditProfilePageViewModel.ModifiedFields,
     isSubmitting: Boolean = false,
     onRequestingAvatarChange: () -> Unit = {},
     onRequestingNicknameChange: () -> Unit = {},
@@ -138,7 +140,7 @@ private fun EditProfilePageContent(
         modifier = modifier.fillMaxSize(),
     ) {
         HorizontalOptionItem(
-            title = stringResource(R.string.avatar),
+            title = stringResource(R.string.avatar) + if (modifiedFields.avatar) "*" else "",
             onClick = { onRequestingAvatarChange() }
         ) {
             AsyncImage(
@@ -153,7 +155,7 @@ private fun EditProfilePageContent(
         HorizontalDivider()
 
         HorizontalOptionItem(
-            title = stringResource(R.string.nickname),
+            title = stringResource(R.string.nickname) + if (modifiedFields.nickname) "*" else "",
             onClick = { onRequestingNicknameChange() }
         ) {
             Text(text = nickname ?: stringResource(R.string.unknown))
@@ -162,7 +164,7 @@ private fun EditProfilePageContent(
         HorizontalDivider()
 
         HorizontalOptionItem(
-            title = stringResource(R.string.college),
+            title = stringResource(R.string.college) + if (modifiedFields.college) "*" else "",
             onClick = { onRequestingCollegeChange() }
         ) {
             Text(text = college ?: stringResource(R.string.unknown))
@@ -171,7 +173,7 @@ private fun EditProfilePageContent(
         HorizontalDivider()
 
         HorizontalOptionItem(
-            title = stringResource(R.string.phone_number),
+            title = stringResource(R.string.phone_number) + if (modifiedFields.phoneNumber) "*" else "",
             onClick = { onRequestingPhoneNumberChange() }
         ) {
             Text(text = phoneNumber ?: stringResource(R.string.unknown))

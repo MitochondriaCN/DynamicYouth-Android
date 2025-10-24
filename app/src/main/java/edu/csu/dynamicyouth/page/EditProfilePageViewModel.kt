@@ -29,6 +29,7 @@ class EditProfilePageViewModel @Inject constructor(
 ) : ViewModel() {
 
     //唉唉，样板代码
+    //其实可以更abstract的，都怪我，弄得到处都是
     private val _avatarUrl = MutableStateFlow<String?>(null)
     val avatarUrl: StateFlow<String?> = _avatarUrl
 
@@ -44,14 +45,30 @@ class EditProfilePageViewModel @Inject constructor(
     private val _phoneNumber = MutableStateFlow<String?>(null)
     val phoneNumber: StateFlow<String?> = _phoneNumber
 
+    private val _modifiedFields = MutableStateFlow(ModifiedFields())
+    val modifiedFields: StateFlow<ModifiedFields> = _modifiedFields
+
+
     fun updateAvatar(localUri: Uri) {
         _avatarUrl.value = localUri.toString()
+        _modifiedFields.value = _modifiedFields.value.copy(avatar = true)
     }
 
     fun updateNickname(nickname: String) {
         _nickname.value = nickname
+        _modifiedFields.value = _modifiedFields.value.copy(nickname = true)
     }
 
+
+    fun updateCollege(college: String) {
+        _college.value = college
+        _modifiedFields.value = _modifiedFields.value.copy(college = true)
+    }
+
+    fun updatePhoneNumber(phoneNumber: String) {
+        _phoneNumber.value = phoneNumber
+        _modifiedFields.value = _modifiedFields.value.copy(phoneNumber = true)
+    }
 
     fun fetchUserInfo() {
         viewModelScope.launch {
@@ -70,14 +87,6 @@ class EditProfilePageViewModel @Inject constructor(
                 _csuColleges.value = collegeList.filter { it.name != null }.map { it.name!! }
             }
         }
-    }
-
-    fun updateCollege(college: String) {
-        _college.value = college
-    }
-
-    fun updatePhoneNumber(phoneNumber: String) {
-        _phoneNumber.value = phoneNumber
     }
 
     private fun uploadNewAvatar(localUri: Uri) {
@@ -110,4 +119,14 @@ class EditProfilePageViewModel @Inject constructor(
     fun checkAndSubmit() {
         //TODO
     }
+
+    /**
+     * 修改过的字段的情况。
+     */
+    data class ModifiedFields(
+        var avatar: Boolean = false,
+        var nickname: Boolean = false,
+        var college: Boolean = false,
+        var phoneNumber: Boolean = false
+    )
 }
