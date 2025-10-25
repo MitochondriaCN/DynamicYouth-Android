@@ -17,7 +17,7 @@
     <string name="ACCESS_BACKGROUND_LOCATION">在后台获取你位置</string>
     <string name="TencentMapSDK_Permission">腾讯地图SDK隐私协议</string>
     <string name="TencentLocationSDK_Permission">腾讯定位SDK隐私协议</string>
-    <string name="climbing">结束登山</string>
+    <string name="climbing">正在登山</string>
     <string name="cannot_fetch_activity">无法获取活动</string>
     <string name="title_activity_auth">登录</string>
     <string name="not_logged_in">未登录</string>
@@ -46,5 +46,7 @@
     <string name="android_developer">Android 开发</string>
     <string name="anti_cheat">反作弊</string>
     <string name="tester">测试</string>
+    <string name="personal_record">个人纪录</string>
+    <string name="school_record">全校纪录</string>
 
 </resources>

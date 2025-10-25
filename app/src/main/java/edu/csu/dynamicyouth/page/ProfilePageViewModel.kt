@@ -83,7 +83,6 @@ class ProfilePageViewModel @Inject constructor(
             //打卡次数
             _checkinCount.value = userInfo.data?.count?.toString()
 
-
             _isRefreshing.value = false
         }
 

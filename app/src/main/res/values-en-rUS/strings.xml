@@ -18,7 +18,7 @@
     <string name="ACCESS_BACKGROUND_LOCATION">Access to Your Location in the Background</string>
     <string name="TencentMapSDK_Permission">Tencent Map SDK Privacy Policy</string>
     <string name="TencentLocationSDK_Permission">Tencent Location SDK Privacy Policy</string>
-    <string name="climbing">End Climbing</string>
+    <string name="climbing">Climbing</string>
     <string name="cannot_fetch_activity">Cannot fetch activities</string>
     <string name="title_activity_auth">Log in</string>
     <string name="not_logged_in">Not logged in</string>
@@ -47,5 +47,7 @@
     <string name="android_developer">Android</string>
     <string name="anti_cheat">Anti-cheating</string>
     <string name="tester">Testing</string>
+    <string name="personal_record">个人纪录</string>
+    <string name="school_record">全校纪录</string>
 
 </resources>
