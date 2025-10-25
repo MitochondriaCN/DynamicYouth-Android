@@ -48,5 +48,6 @@
     <string name="tester">测试</string>
     <string name="personal_record">个人纪录</string>
     <string name="school_record">全校纪录</string>
+    <string name="stop_climbing">结束登山</string>
 
 </resources>

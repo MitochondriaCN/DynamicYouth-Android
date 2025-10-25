@@ -47,7 +47,8 @@
     <string name="android_developer">Android</string>
     <string name="anti_cheat">Anti-cheating</string>
     <string name="tester">Testing</string>
-    <string name="personal_record">个人纪录</string>
-    <string name="school_record">全校纪录</string>
+    <string name="personal_record">PR</string>
+    <string name="school_record">SR</string>
+    <string name="stop_climbing">Finish Climbing</string>
 
 </resources>
