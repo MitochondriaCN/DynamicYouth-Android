@@ -122,8 +122,7 @@ class EditProfilePageViewModel @Inject constructor(
     }
 
     /**
-     * 检查数据合法性并上传。
-     * @throws Exception 若数据合法但上传失败，抛出异常。
+     * 检查数据合法性并上传。使用[updateResult]返回结果。
      */
     fun checkAndSubmit() {
         _isSubmitting.value = true
@@ -179,7 +178,7 @@ class EditProfilePageViewModel @Inject constructor(
                 val response = userApi.update(
                     UserApi.UpdateDto(
                         nickname = nickname,
-                        avatar = avatar,
+                        avatar = if (_modifiedFields.value.avatar) avatar else null,
                         college = college,
                         phone = phoneNumber
                     )

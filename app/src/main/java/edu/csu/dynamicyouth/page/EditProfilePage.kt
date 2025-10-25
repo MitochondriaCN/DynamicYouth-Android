@@ -214,7 +214,7 @@ private fun EditProfilePageContent(
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = { onSubmit() },
-            enabled = !isSubmitting
+            enabled = !isSubmitting && (modifiedFields.avatar || modifiedFields.nickname || modifiedFields.college || modifiedFields.phoneNumber)
         ) {
             Text(text = stringResource(R.string.submit))
         }
